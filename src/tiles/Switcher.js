@@ -83,8 +83,27 @@ class Switcher extends Tile {
 
     if ( wantsToMoveToNextTile ) {
 
-      const { x, y, } = map.worldToTilePosition( pos );
-      const next = map.getTileInDir( x, y, dir );
+      const { x, y } = map.worldToTilePosition( pos );
+      const n = map.get4Neigbours( x, y );
+      const op = Dirs.opposite( dir );
+      n[ Dirs.toIndex( op ) - 1 ] = null; // remove opposite
+      const lastIdx = Dirs.toIndex( this.lastDir );
+      const nextIdx = ((lastIdx + 1) % 5);
+      const fromTile = this.fromTile;
+
+      const chooseOne = n.filter(n => {
+        return n && n.type !== "Blank" && n !== fromTile;
+      });
+
+      //console.log(n, chooseOne)
+
+      const next = !chooseOne.length ? fromTile  : chooseOne[Math.random() * chooseOne.length | 0];
+
+      //const next = map.getTileInDir( x, y, dir );
+
+
+
+
 
       let dirsToCheck = Dirs.notDir( Dirs.opposite( dir ) );
       if ( dirsToCheck.length > 1 ) {
@@ -96,7 +115,7 @@ class Switcher extends Tile {
       // console.log( dirsToCheck );
 
 
-      if ( next && next.acceptItem( item ) ) {
+      if ( next && next.acceptItem( item, this ) ) {
 
         this.item = null;
 

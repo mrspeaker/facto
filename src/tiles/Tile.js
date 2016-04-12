@@ -25,7 +25,7 @@ class Tile extends TileSprite {
 
   }
 
-  acceptItem ( item ) {
+  acceptItem ( item, fromTile ) {
 
     const { x, y } = this;
     const { tileW, tileH } = env;
@@ -34,6 +34,7 @@ class Tile extends TileSprite {
     if ( accepts ) {
 
       this.item = item;
+      this.fromTile = fromTile;
 
       this.item_x = tileW / 2 | 0;
       this.item_y = tileH / 2 | 0;

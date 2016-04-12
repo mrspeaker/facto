@@ -94,6 +94,19 @@ class MachineChunk extends TileMap {
 
   }
 
+  get4Neigbours ( x, y ) {
+
+    return [
+
+      this.getTileInDir( x, y, Dirs.UP ),
+      this.getTileInDir( x, y, Dirs.DOWN ),
+      this.getTileInDir( x, y, Dirs.LEFT ),
+      this.getTileInDir( x, y, Dirs.RIGHT ),
+
+    ];
+
+  }
+
   addItem ( item, pos ) {
 
     const tile = this.tileAtPosition( pos );
