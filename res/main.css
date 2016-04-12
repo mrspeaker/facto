@@ -1,0 +1,22 @@
+body {
+  margin: 0;
+
+  width: 100%;
+  height: 100%;
+}
+
+#board {
+  width: 540px;
+  height: 960px;
+  width: 360px;
+  height: 640px;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: #286277;
+}
+
+#board canvas {
+  height: 100%;
+}
