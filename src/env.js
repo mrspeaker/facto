@@ -3,7 +3,9 @@ const env = {
   w: window.innerWidth,
   h: window.innerHeight,
 
-  chunkSize: 16,
+  chunkW: 16,
+  chunkH: 32,
+
   chunksX: 2,
   chunksY: 1,
   tileW: 32,

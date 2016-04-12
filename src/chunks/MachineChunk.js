@@ -9,7 +9,8 @@ import Iron from "../items/Iron";
 const {
   tileW,
   tileH,
-  chunkSize
+  chunkW,
+  chunkH
 } = env;
 
 class MachineChunk extends TileMap {
@@ -18,13 +19,13 @@ class MachineChunk extends TileMap {
 
     const tiles = Array.from(
 
-      new Array( chunkSize * chunkSize ),
+      new Array( chunkW * chunkH ),
 
       ( _, i ) => {
 
         // Make a rectangle of passing
-        const yp = i / chunkSize | 0;
-        const xp = i % chunkSize;
+        const yp = i / chunkW | 0;
+        const xp = i % chunkW;
 
         const isTop = yp === 2 && xp > 3 && xp < 11;
         const isBot = yp === 8 && xp > 4 && xp < 12;
@@ -45,8 +46,8 @@ class MachineChunk extends TileMap {
 
     super( {
       tiles: tiles,
-      w: chunkSize,
-      h: chunkSize,
+      w: chunkW,
+      h: chunkH,
       tileW: tileW,
       tileH: tileH
     }, ( tileDeets, i ) => {
@@ -65,8 +66,8 @@ class MachineChunk extends TileMap {
       }
 
       // Set tile X an Y positions
-      tile.x = i % chunkSize;
-      tile.y = i / chunkSize | 0;
+      tile.x = i % chunkW;
+      tile.y = i / chunkW | 0;
 
       return tile;
 
@@ -79,8 +80,8 @@ class MachineChunk extends TileMap {
 
     }, 3000 );
 
-    this.pos.x = chunkX * chunkSize * tileW;
-    this.pos.y = chunkY * chunkSize * tileH;
+    this.pos.x = chunkX * chunkW * tileW;
+    this.pos.y = chunkY * chunkH * tileH;
 
   }
 
