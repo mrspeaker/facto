@@ -7,8 +7,6 @@ class MouseControls {
   wheelDt = 0;
 
   down ( e ) {
-    console.log(this, e.touches[0]);
-
     var x, y;
     if (e.touches) {
       x = e.touches[0].pageX;
