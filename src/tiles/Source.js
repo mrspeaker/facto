@@ -9,7 +9,7 @@ const {
 
 const mapTiles = new Texture( "res/images/passer.png" );
 
-class Switcher extends Tile {
+class Source extends Tile {
 
   speed = 0.03;
 
@@ -17,10 +17,8 @@ class Switcher extends Tile {
 
     super( mapTiles, 32, 32 );
 
-    this.type = "Switcher";
+    this.type = "Passer";
     this.dir = dir;
-    this.lastDir = dir;
-
     this.frame.y = Dirs.toIndex( dir );
     this.frame.x = 0;
 
@@ -83,35 +81,8 @@ class Switcher extends Tile {
 
     if ( wantsToMoveToNextTile ) {
 
-      const { x, y } = map.worldToTilePosition( pos );
-      const n = map.get4Neigbours( x, y );
-      const op = Dirs.opposite( dir );
-      n[ Dirs.toIndex( op ) - 1 ] = null; // remove opposite
-      const lastIdx = Dirs.toIndex( this.lastDir );
-      const nextIdx = ( lastIdx + 1 ) % 5;
-      const fromTile = this.fromTile;
-
-      const chooseOne = n.filter( n => {
-
-        return n && n.type !== "Blank" && n !== fromTile;
-
-      } );
-
-      const next = !chooseOne.length ?
-        fromTile  :
-        chooseOne[ Math.random() * chooseOne.length | 0 ];
-      //const next = map.getTileInDir( x, y, dir );
-
-
-      let dirsToCheck = Dirs.notDir( Dirs.opposite( dir ) );
-      if ( dirsToCheck.length > 1 ) {
-
-        dirsToCheck = dirsToCheck.filter( d => d !== this.lastDir );
-
-      }
-
-      // console.log( dirsToCheck );
-
+      const { x, y, } = map.worldToTilePosition( pos );
+      const next = map.getTileInDir( x, y, dir );
 
       if ( next && next.acceptItem( item, this ) ) {
 
@@ -131,4 +102,4 @@ class Switcher extends Tile {
 
 }
 
-module.exports = Switcher;
+module.exports = Source;

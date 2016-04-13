@@ -1,12 +1,10 @@
 # facto
 
-Tile API:
+Types:
 
-  cueInputItem (item, dir)
-
-    sets inputItem = {item: item, dir: dir};
-
-  canAcceptInputItem (item)
-
-    return true if can take more items
-    (defaults to "return !this.inputItem")
+* passer
+* takergiver (inserter)
+* source: extracts from groundchunk
+* switcher: passer, but alternates if choice
+* transformer: item a -> b
+* destroyer: destroys.

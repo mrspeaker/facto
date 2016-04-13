@@ -84,8 +84,8 @@ class GameScreen extends Container {
 
   setTileUI () {
 
-    this.uiTile.frame.x = this.tile === 0 ? 0 : this.rot;
-    this.uiTile.frame.y = this.tile < 2 ? 0 : 1;
+    this.uiTile.frame.x = this.rot;
+    this.uiTile.frame.y = this.tile ;
 
   }
 
@@ -131,7 +131,7 @@ class GameScreen extends Container {
           }
           else {
 
-            this.tile = ( this.tile + 1 ) % 2;
+            this.tile = ( this.tile + 1 ) % 3;
             this.rot = 1;
 
           }
@@ -216,7 +216,7 @@ class GameScreen extends Container {
 
         earth.setTile(
           {
-            type: this.tile === 0 ? "Blank" : "Passer",
+            type: ["Blank", "Passer", "Destroyer"][this.tile],
             dir
           },
           { x, y });
