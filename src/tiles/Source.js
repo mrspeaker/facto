@@ -17,45 +17,17 @@ class Source extends Tile {
 
     super( mapTiles, 32, 32 );
 
-    this.type = "Passer";
+    this.type = "Source";
     this.dir = dir;
     this.frame.y = Dirs.toIndex( dir );
     this.frame.x = 0;
 
-    this.wall = true;
     this.state = "IDLE";
     this.stateTime = 0;
 
   }
 
   update ( dt, t, map ) {
-
-    this.frame.x = ( t / 600 | 0 ) % 2;
-
-    if ( this.dir === Dirs.RIGHT ) {
-
-      this.frame.x = ! this.item ? 3 : ( ( this.item_x - 16 ) / 4 ) | 0;
-
-    }
-
-    if ( this.dir === Dirs.LEFT ) {
-
-      this.frame.x = ! this.item ? 0 : ( ( this.item_x - 1 ) / 4 ) | 0;
-
-    }
-
-    if ( this.dir === Dirs.DOWN ) {
-
-      this.frame.x = ! this.item ? 2 : ( ( this.item_y - 16 ) / 4 ) | 0;
-
-    }
-
-    if ( this.dir === Dirs.UP ) {
-
-      this.frame.x = ! this.item ? 2 : ( ( Math.max(0, 15 - this.item_y) ) / 4 ) | 0;
-
-    }
-
 
     const { item, speed, dir, pos } = this;
     const { tileW, tileH } = env;

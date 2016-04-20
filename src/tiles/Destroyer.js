@@ -18,10 +18,6 @@ class Destroyer extends Tile {
     this.type = "Destroyer";
     this.dir = dir;
 
-    this.wall = true;
-    this.state = "IDLE";
-    this.stateTime = 0;
-
   }
 
   update ( dt, t, map ) {

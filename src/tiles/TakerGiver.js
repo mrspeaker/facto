@@ -22,7 +22,6 @@ class TakerGiver extends Tile {
     this.frame.y = Dirs.toIndex( dir );
     this.frame.x = 0;
 
-    this.wall = true;
     this.state = "IDLE";
     this.stateTime = 0;
 

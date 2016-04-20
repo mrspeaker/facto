@@ -22,10 +22,6 @@ class Passer extends Tile {
     this.frame.y = Dirs.toIndex( dir );
     this.frame.x = 0;
 
-    this.wall = true;
-    this.state = "IDLE";
-    this.stateTime = 0;
-
   }
 
   update ( dt, t, map ) {
@@ -40,7 +36,7 @@ class Passer extends Tile {
 
     if ( this.dir === Dirs.LEFT ) {
 
-      this.frame.x = ! this.item ? 0 : ( ( this.item_x - 1 ) / 4 ) | 0;
+      this.frame.x = ! this.item ? 3 : 3 - ( ( this.item_x - 1 ) / 4 ) | 0;
 
     }
 
