@@ -1,13 +1,14 @@
 import pop from "pop";
 import Tile from "./Tile";
 import Dirs from "../Dirs";
+import Iron from "../items/Iron";
 import env from "../env";
 
 const {
   Texture
 } = pop;
 
-const mapTiles = new Texture( "res/images/passer.png" );
+const mapTiles = new Texture( "res/images/source.png" );
 
 class Source extends Tile {
 
@@ -27,48 +28,30 @@ class Source extends Tile {
 
   }
 
+  accepts () {
+
+    return false;
+
+  }
+
   update ( dt, t, map ) {
 
-    const { item, speed, dir, pos } = this;
-    const { tileW, tileH } = env;
+    const { item, dir, pos } = this;
 
-    if ( ! item ) {
+    this.stateTime += dt;
 
-      return;
-
-    }
-
-    const xo = speed * dt * Dirs.dtHoriz( dir );
-    const yo = speed * dt * Dirs.dtVert( dir );
-
-    // Logical position
-    const rxo = this.item_x += xo;
-    const ryo = this.item_y += yo;
-
-    // Did move off tile?
-    const wantsToMoveToNextTile = dir === Dirs.UP && ryo < 0 ||
-      dir === Dirs.DOWN && ryo > tileH ||
-      dir === Dirs.LEFT && rxo < 0 ||
-      dir === Dirs.RIGHT && rxo > tileW;
-
-    if ( wantsToMoveToNextTile ) {
-
-      const { x, y, } = map.worldToTilePosition( pos );
-      const next = map.getTileInDir( x, y, dir );
-
-      if ( next && next.acceptItem( item, this ) ) {
-
-        this.item = null;
-
-      }
+    if ( this.stateTime < 3000 ) {
 
       return;
 
     }
 
-    // Screen position
-    item.pos.x += xo;
-    item.pos.y += yo;
+    this.stateTime = 0;
+
+    const { x, y, } = map.worldToTilePosition( pos );
+    const next = map.getTileInDir( x, y, dir );
+
+    map.addItem( new Iron(), map.worldToTilePosition( next.pos ) );
 
   }
 

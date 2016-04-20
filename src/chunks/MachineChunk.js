@@ -1,5 +1,6 @@
 import TileMap from "../../lib/TileMap";
 import Blank from "../tiles/Blank";
+import Source from "../tiles/Source";
 import Passer from "../tiles/Passer";
 import Switcher from "../tiles/Switcher";
 import TakerGiver from "../tiles/TakerGiver";
@@ -8,12 +9,15 @@ import Dirs from "../Dirs";
 import env from "../env";
 import Iron from "../items/Iron";
 
+const tileClasses = { Blank, Source, Passer, Switcher, Destroyer, TakerGiver };
+
 const {
   tileW,
   tileH,
   chunkW,
   chunkH
 } = env;
+
 
 class MachineChunk extends TileMap {
 
@@ -76,7 +80,7 @@ class MachineChunk extends TileMap {
     } );
 
     // Add some items
-    setInterval( () => {
+    setTimeout( () => {
 
       this.addItem( new Iron(), { x: 4, y: 2 } );
 
@@ -113,7 +117,7 @@ class MachineChunk extends TileMap {
 
     const tile = this.tileAtPosition( pos );
 
-    if ( !tile || !tile.acceptItem( item ) ) {
+    if ( ! tile || ! tile.acceptItem( item ) ) {
 
       return;
 
@@ -147,7 +151,7 @@ class MachineChunk extends TileMap {
       return;
     }
 
-    const newTile = new { Blank, Passer, Switcher, Destroyer, TakerGiver }[ type ]( dir );
+    const newTile = new tileClasses[ type ]( dir );
     newTile.x = oldTile.x;
     newTile.y = oldTile.y;
     newTile.pos.x = oldTile.pos.x;
