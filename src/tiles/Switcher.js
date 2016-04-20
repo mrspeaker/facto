@@ -7,7 +7,7 @@ const {
   Texture
 } = pop;
 
-const mapTiles = new Texture( "res/images/passer.png" );
+const mapTiles = new Texture( "res/images/switcher.png" );
 
 class Switcher extends Tile {
 

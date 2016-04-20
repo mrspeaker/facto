@@ -1,6 +1,8 @@
 import TileMap from "../../lib/TileMap";
 import Blank from "../tiles/Blank";
-import Passer from "../tiles/Switcher";
+import Passer from "../tiles/Passer";
+import Switcher from "../tiles/Switcher";
+import TakerGiver from "../tiles/TakerGiver";
 import Destroyer from "../tiles/Destroyer";
 import Dirs from "../Dirs";
 import env from "../env";
@@ -145,7 +147,7 @@ class MachineChunk extends TileMap {
       return;
     }
 
-    const newTile = new {Passer, Blank, Destroyer}[type]( dir );
+    const newTile = new { Blank, Passer, Switcher, Destroyer, TakerGiver }[ type ]( dir );
     newTile.x = oldTile.x;
     newTile.y = oldTile.y;
     newTile.pos.x = oldTile.pos.x;

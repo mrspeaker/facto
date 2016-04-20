@@ -131,7 +131,7 @@ class GameScreen extends Container {
           }
           else {
 
-            this.tile = ( this.tile + 1 ) % 3;
+            this.tile = ( this.tile + 1 ) % 4;
             this.rot = 1;
 
           }
@@ -216,7 +216,7 @@ class GameScreen extends Container {
 
         earth.setTile(
           {
-            type: ["Blank", "Passer", "Destroyer"][this.tile],
+            type: env.tiles[this.tile],
             dir
           },
           { x, y });
@@ -236,17 +236,16 @@ class GameScreen extends Container {
     }
 
 
-    // R key: rotate tile
+    // Q key: switch tile
     if ( this.controls.key( 81 ) ) {
-
       this.controls.unset( 81 );
-      this.tile = ( this.tile + 1 ) % 3;
+      this.tile = ( this.tile + 1 ) % env.numTileTypes;
       this.rot = this.tile === 0 ? 0 : 1;
       this.setTileUI();
 
     }
 
-    // Q key: switch tile
+    // R key: rotate tile
     if ( this.controls.key( 82 ) ) {
 
       this.controls.unset( 82 );

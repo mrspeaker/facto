@@ -11,6 +11,9 @@ const env = {
   tileW: 32,
   tileH: 32,
 
+  numTileTypes: 5,
+  tiles: [ "Blank", "Passer", "Switcher", "Destroyer", "TakerGiver" ]
+
 };
 
 export default env;

@@ -6,7 +6,7 @@ const {
 } = pop;
 
 
-const mapTiles = new Texture( "res/images/tiles.png" );
+const mapTiles = new Texture( "res/images/blank.png" );
 
 class Blank extends Tile {
 
