@@ -1,7 +1,6 @@
 import pop from "pop";
 import Tile from "./Tile";
 import Dirs from "../Dirs";
-import env from "../env";
 
 const {
   Texture
@@ -11,7 +10,7 @@ const mapTiles = new Texture( "res/images/takergiver.png" );
 
 class TakerGiver extends Tile {
 
-  speed = 0.03;
+  processingTime = 1000;
 
   constructor ( dir ) {
 
@@ -29,73 +28,39 @@ class TakerGiver extends Tile {
 
   update ( dt, t, map ) {
 
-    this.frame.x = ( t / 600 | 0 ) % 2;
+    const { dir, pos } = this;
 
-    if ( this.dir === Dirs.RIGHT ) {
-
-      this.frame.x = ! this.item ? 3 : ( ( this.item_x - 16 ) / 4 ) | 0;
-
-    }
-
-    if ( this.dir === Dirs.LEFT ) {
-
-      this.frame.x = ! this.item ? 0 : ( ( this.item_x - 1 ) / 4 ) | 0;
-
-    }
-
-    if ( this.dir === Dirs.DOWN ) {
-
-      this.frame.x = ! this.item ? 2 : ( ( this.item_y - 16 ) / 4 ) | 0;
-
-    }
-
-    if ( this.dir === Dirs.UP ) {
-
-      this.frame.x = ! this.item ? 2 : ( ( Math.max(0, 15 - this.item_y) ) / 4 ) | 0;
-
-    }
-
-
-    const { item, speed, dir, pos } = this;
-    const { tileW, tileH } = env;
-
-    if ( ! item ) {
-
-      return;
-
-    }
-
-    const xo = speed * dt * Dirs.dtHoriz( dir );
-    const yo = speed * dt * Dirs.dtVert( dir );
-
-    // Logical position
-    const rxo = this.item_x += xo;
-    const ryo = this.item_y += yo;
-
-    // Did move off tile?
-    const wantsToMoveToNextTile = dir === Dirs.UP && ryo < 0 ||
-      dir === Dirs.DOWN && ryo > tileH ||
-      dir === Dirs.LEFT && rxo < 0 ||
-      dir === Dirs.RIGHT && rxo > tileW;
-
-    if ( wantsToMoveToNextTile ) {
+    if ( this.state === "IDLE" ) {
 
       const { x, y, } = map.worldToTilePosition( pos );
       const next = map.getTileInDir( x, y, dir );
 
-      if ( next && next.acceptItem( item, this ) ) {
+      const item = next.reliquishItem();
+      if ( item ) {
 
-        this.item = null;
+        this.acceptItem( item, next );
+        this.state = "TAKING";
+        this.stateTime = 0;
 
       }
 
-      return;
+    } else if ( this.state === "TAKING" ){
+
+      if ( ( this.stateTime += dt ) > this.processingTime ) {
+
+        const { x, y, } = map.worldToTilePosition( pos );
+        const next = map.getTileInDir( x, y, Dirs.opposite( dir ) );
+
+        if ( next && next.acceptItem( this.item, this ) ) {
+
+          this.item = null;
+          this.state = "IDLE";
+
+        }
+
+      }
 
     }
-
-    // Screen position
-    item.pos.x += xo;
-    item.pos.y += yo;
 
   }
 

@@ -96,6 +96,20 @@ class Passer extends Tile {
 
   }
 
+  reliquishItem () {
+
+    if ( ! this.item ) {
+
+      return null;
+
+    }
+
+    const item = this.item;
+    this.item = null;
+    return item;
+
+  }
+
 }
 
 module.exports = Passer;

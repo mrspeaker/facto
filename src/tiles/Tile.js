@@ -50,6 +50,12 @@ class Tile extends TileSprite {
 
   }
 
+  reliquishItem () {
+
+    return null;
+
+  }
+
 }
 
 module.exports = Tile;
