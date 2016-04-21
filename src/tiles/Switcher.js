@@ -11,7 +11,7 @@ const mapTiles = new Texture( "res/images/switcher.png" );
 
 class Switcher extends Tile {
 
-  speed = 0.03;
+  speed = 0.05;
 
   constructor ( dir ) {
 

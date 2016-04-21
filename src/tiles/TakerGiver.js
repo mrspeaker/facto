@@ -54,25 +54,44 @@ class TakerGiver extends Tile {
 
     }
 
+    if (this.frame.x < 0 || this.frame.x > 3) {
+      // Bad frame... fix this... item rel position is still moving even when stuck!
+      this.frame.y = 0;
+      this.frame.x = 0;
+    } else {
+      this.frame.y = Dirs.toIndex( this.dir );
+    }
+
   }
 
   update ( dt, t, map ) {
 
-    const { dir, pos } = this;
+    const { dir, pos, item } = this;
 
     this.updateAnimFrame( t );
 
     if ( this.state === "IDLE" ) {
 
       const { x, y, } = map.worldToTilePosition( pos );
-      const next = map.getTileInDir( x, y, dir );
+      const next = map.getTileInDir( x, y, Dirs.opposite( dir ) );
 
-      const item = next.reliquishItem();
       if ( item ) {
 
-        this.acceptItem( item, next );
+        // Only here if "created" on an item...
         this.state = "TAKING";
         this.stateTime = 0;
+
+      }
+      else {
+
+        const nextItem = next.reliquishItem();
+        if ( nextItem ) {
+
+          this.acceptItem( nextItem, next );
+          this.state = "TAKING";
+          this.stateTime = 0;
+
+        }
 
       }
 
@@ -81,7 +100,7 @@ class TakerGiver extends Tile {
       if ( ( this.stateTime += dt ) > this.processingTime ) {
 
         const { x, y, } = map.worldToTilePosition( pos );
-        const next = map.getTileInDir( x, y, Dirs.opposite( dir ) );
+        const next = map.getTileInDir( x, y, dir );
 
         if ( next && next.acceptItem( this.item, this ) ) {
 

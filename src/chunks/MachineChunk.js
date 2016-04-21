@@ -150,7 +150,7 @@ class MachineChunk extends TileMap {
     if ( oldTileDeets.type === type && oldTileDeets.dir === dir ) {
 
       return;
-      
+
     }
 
     const newTile = new tileClasses[ type ]( dir );

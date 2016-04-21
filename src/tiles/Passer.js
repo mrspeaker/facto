@@ -29,8 +29,6 @@ class Passer extends Tile {
     const { item, speed, dir, pos } = this;
     const { tileW, tileH } = env;
 
-    this.frame.x = ( t / 600 | 0 ) % 2;
-
     if ( this.dir === Dirs.RIGHT ) {
 
       this.frame.x = ! this.item ? 3 : this.item_x / ( tileW / 4 ) | 0;
