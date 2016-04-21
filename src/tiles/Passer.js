@@ -113,7 +113,10 @@ class Passer extends Tile {
 
     }
 
-    // const { item_x, item_y } = this;
+    const { item_x, item_y } = this;
+
+    if ( item_x <= 15 || item_x >= 17 ) return null;
+    if ( item_y <= 15 || item_x >= 17 ) return null;
 
     this.item = null;
     return item;
