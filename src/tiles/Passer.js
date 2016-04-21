@@ -11,7 +11,7 @@ const mapTiles = new Texture( "res/images/passer.png" );
 
 class Passer extends Tile {
 
-  speed = 0.03;
+  speed = 0.05;
 
   constructor ( dir ) {
 
@@ -26,44 +26,42 @@ class Passer extends Tile {
 
   update ( dt, t, map ) {
 
+    const { item, speed, dir, pos } = this;
+    const { tileW, tileH } = env;
+
     this.frame.x = ( t / 600 | 0 ) % 2;
 
     if ( this.dir === Dirs.RIGHT ) {
 
-      this.frame.x = ! this.item ? 3 : ( ( this.item_x - 16 ) / 4 ) | 0;
+      this.frame.x = ! this.item ? 3 : this.item_x / ( tileW / 4 ) | 0;
 
     }
 
     if ( this.dir === Dirs.LEFT ) {
 
-      this.frame.x = ! this.item ? 3 : 3 - ( ( this.item_x - 1 ) / 4 ) | 0;
+      this.frame.x = ! this.item ? 3 : ( ( tileW - this.item_x ) / ( tileW / 4 ) | 0 ) ;
 
     }
 
     if ( this.dir === Dirs.DOWN ) {
 
-      this.frame.x = ! this.item ? 2 : ( ( this.item_y - 16 ) / 4 ) | 0;
+      this.frame.x = ! this.item ? 2 : ( this.item_y / ( tileH / 4 ) | 0 );
 
     }
 
     if ( this.dir === Dirs.UP ) {
 
-      this.frame.x = ! this.item ? 2 : ( ( Math.max(0, 15 - this.item_y) ) / 4 ) | 0;
+      this.frame.x = ! this.item ? 2 : ( ( tileH - this.item_y ) / ( tileH / 4 ) | 0 );
 
     }
 
     if (this.frame.x < 0 || this.frame.x > 3) {
+      // Bad frame... fix this... item rel position is still moving even when stuck!
       this.frame.y = 0;
       this.frame.x = 0;
     } else {
       this.frame.y = Dirs.toIndex( this.dir );
     }
-
-
-    const { item, speed, dir, pos } = this;
-    const { tileW, tileH } = env;
-
-
 
     if ( ! item ) {
 
@@ -107,13 +105,16 @@ class Passer extends Tile {
 
   reliquishItem () {
 
-    if ( ! this.item ) {
+    const { item } = this;
+
+    if ( ! item ) {
 
       return null;
 
     }
 
-    const item = this.item;
+    // const { item_x, item_y } = this;
+
     this.item = null;
     return item;
 

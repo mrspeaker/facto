@@ -1,5 +1,6 @@
 import pop from "pop";
 import env from "../env";
+import Dirs from "../Dirs";
 
 const {
   TileSprite,
@@ -38,11 +39,38 @@ class Tile extends TileSprite {
       this.fromTile = fromTile;
       this.acceptedItem = true;
 
-      this.item_x = tileW / 2 | 0;
-      this.item_y = tileH / 2 | 0;
+      let xo = tileW / 2 | 0;
+      let yo = tileH / 2 | 0;
 
-      item.pos.x = x * tileW + this.item_x - 8;
-      item.pos.y = y * tileH + this.item_y - 8;
+      if ( fromTile ) {
+
+        const dir = Dirs.opposite( fromTile.dir );
+
+        if ( dir === Dirs.LEFT ) { xo = 0; }
+        if ( dir === Dirs.RIGHT ) { xo = tileW; }
+        if ( dir === Dirs.UP ) { yo = 0; }
+        if ( dir === Dirs.DOWN ) { yo = tileH; }
+
+        if ( Dirs.isVert( this.dir ) && Dirs.isHoriz( dir ) ) {
+
+          xo = tileW / 2 | 0;
+
+        }
+        if ( Dirs.isHoriz( this.dir ) && Dirs.isVert( dir ) ) {
+
+          yo = tileH / 2 | 0;
+
+        }
+
+      }
+
+
+      this.item_x = xo;
+      this.item_y = yo;
+
+      const itemHalfWidth = 8;
+      item.pos.x = x * tileW + this.item_x - itemHalfWidth;
+      item.pos.y = y * tileH + this.item_y - itemHalfWidth;
 
     }
 
