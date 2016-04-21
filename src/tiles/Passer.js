@@ -52,9 +52,18 @@ class Passer extends Tile {
 
     }
 
+    if (this.frame.x < 0 || this.frame.x > 3) {
+      this.frame.y = 0;
+      this.frame.x = 0;
+    } else {
+      this.frame.y = Dirs.toIndex( this.dir );
+    }
+
 
     const { item, speed, dir, pos } = this;
     const { tileW, tileH } = env;
+
+
 
     if ( ! item ) {
 
