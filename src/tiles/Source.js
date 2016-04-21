@@ -2,7 +2,6 @@ import pop from "pop";
 import Tile from "./Tile";
 import Dirs from "../Dirs";
 import Iron from "../items/Iron";
-import env from "../env";
 
 const {
   Texture
@@ -36,22 +35,33 @@ class Source extends Tile {
 
   update ( dt, t, map ) {
 
-    const { item, dir, pos } = this;
+    const { dir, pos } = this;
+    let { item } = this;
 
     this.stateTime += dt;
-
     if ( this.stateTime < 3000 ) {
 
       return;
 
     }
 
-    this.stateTime = 0;
+    if ( ! item ) {
+
+      item = this.item = new Iron();
+
+    }
 
     const { x, y, } = map.worldToTilePosition( pos );
     const next = map.getTileInDir( x, y, dir );
+    if ( next.accepts( item ) ) {
 
-    map.addItem( new Iron(), map.worldToTilePosition( next.pos ) );
+      this.stateTime = 0;
+      map.addItem( item, map.worldToTilePosition( next.pos ) );
+      this.item = null;
+
+    }
+
+    this.stateTime = 0;
 
   }
 

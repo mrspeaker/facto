@@ -48,10 +48,15 @@ class HUD extends Sprite {
     }
 
     // Right side
-    if ( x > 312 ) {
+    if ( x < 360 ) {
 
       return yo <= 50 ? "UP" : "DOWN";
 
+    }
+
+    const button = (x - 360) / 40 | 0;
+    if ( button <= 5 ) {
+      return "BUTTON_" + button;
     }
 
     return "";

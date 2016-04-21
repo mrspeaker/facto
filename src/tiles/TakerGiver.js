@@ -76,8 +76,7 @@ class TakerGiver extends Tile {
 
       }
 
-    }
-    else if ( this.state === "TAKING" ){
+    } else if ( this.state === "TAKING" ) {
 
       if ( ( this.stateTime += dt ) > this.processingTime ) {
 

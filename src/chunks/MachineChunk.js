@@ -119,7 +119,7 @@ class MachineChunk extends TileMap {
 
     if ( ! tile || ! tile.acceptItem( item ) ) {
 
-      return;
+      return null;
 
     }
 
@@ -148,7 +148,9 @@ class MachineChunk extends TileMap {
     const oldTile = this.children[ offset ];
 
     if ( oldTileDeets.type === type && oldTileDeets.dir === dir ) {
+
       return;
+      
     }
 
     const newTile = new tileClasses[ type ]( dir );

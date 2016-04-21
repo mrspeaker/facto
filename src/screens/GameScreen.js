@@ -80,6 +80,15 @@ class GameScreen extends Container {
     this.selected.pos.y = env.h - 80;
     this.selected.pos.x = 30;
     this.add( this.selected );
+
+    this.quiver = Array(6).fill().map(() => new UITile());
+    this.quiver.forEach((t, i) => {
+      this.add(t);
+      t.pos.x = i * 40 + 370;
+      t.pos.y = env.h - 100;
+      t.frame.y = i;
+    });
+
   }
 
   setTileUI () {
@@ -114,6 +123,17 @@ class GameScreen extends Container {
       // Handle HUD buttons
       const pressed = this.hud.checkButtons( mouse.x, mouse.y );
       if ( pressed ) {
+
+        if ( pressed.indexOf( "BUTTON" ) > -1 ) {
+
+          this.tile = parseInt( pressed.slice( -1 ), 10 );
+          this.rot = 1;
+          this.selected.pos.x = 350 + ( this.tile * 40 );
+          this.setTileUI();
+          mouse.left = false;
+          return;
+
+        }
 
         switch ( pressed ) {
 
