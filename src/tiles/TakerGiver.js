@@ -11,6 +11,7 @@ const mapTiles = new Texture( "res/images/takergiver.png" );
 class TakerGiver extends Tile {
 
   processingTime = 1000;
+  speed = 0.025;
 
   constructor ( dir ) {
 
@@ -26,7 +27,7 @@ class TakerGiver extends Tile {
 
   }
 
-  updateAnimFrame ( t ) {
+  updateAnimFrame ( dt, t ) {
 
     this.frame.x = ( t / 600 | 0 ) % 2;
 
@@ -55,20 +56,24 @@ class TakerGiver extends Tile {
     }
 
     if (this.frame.x < 0 || this.frame.x > 3) {
+
       // Bad frame... fix this... item rel position is still moving even when stuck!
       this.frame.y = 0;
       this.frame.x = 0;
+
     } else {
+
       this.frame.y = Dirs.toIndex( this.dir );
+
     }
 
   }
 
   update ( dt, t, map ) {
 
-    const { dir, pos, item } = this;
+    const { dir, speed, pos, item } = this;
 
-    this.updateAnimFrame( t );
+    this.updateAnimFrame( dt, t );
 
     if ( this.state === "IDLE" ) {
 
@@ -77,7 +82,7 @@ class TakerGiver extends Tile {
 
       if ( item ) {
 
-        // Only here if "created" on an item...
+        // Only here if placed a TakerGiver on a blank tile with item.
         this.state = "TAKING";
         this.stateTime = 0;
 
@@ -97,15 +102,31 @@ class TakerGiver extends Tile {
 
     } else if ( this.state === "TAKING" ) {
 
+      const xo = speed * dt * Dirs.dtHoriz( dir );
+      const yo = speed * dt * Dirs.dtVert( dir );
+
+      // Logical position
+      // const rxo = this.item_x += xo;
+      // const ryo = this.item_y += yo;
+      // Screen position
+      item.pos.x += xo;
+      item.pos.y += yo;
+
       if ( ( this.stateTime += dt ) > this.processingTime ) {
 
         const { x, y, } = map.worldToTilePosition( pos );
         const next = map.getTileInDir( x, y, dir );
 
-        if ( next && next.acceptItem( this.item, this ) ) {
+        if ( next && next.acceptItem( item, this ) ) {
 
           this.item = null;
           this.state = "IDLE";
+
+        } else {
+
+          // Blocked!
+          item.pos.x -= xo;
+          item.pos.y -= yo;
 
         }
 
