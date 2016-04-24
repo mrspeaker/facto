@@ -57,7 +57,7 @@ class TakerGiver extends Tile {
 
     if (this.frame.x < 0 || this.frame.x > 3) {
 
-      // Bad frame... fix this... item rel position is still moving even when stuck!
+      // Bad frame... fix this...
       this.frame.y = 0;
       this.frame.x = 0;
 

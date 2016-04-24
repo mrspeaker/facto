@@ -255,6 +255,18 @@ class GameScreen extends Container {
 
     }
 
+    // Check for inventory keys
+    [0, 1, 2, 3, 4, 5].forEach( i => {
+
+      if ( this.controls.key( 49 + i ) ) {
+
+        this.tile = i;
+        this.setTileUI();
+        this.selected.pos.x = 350 + ( i * 40 );
+
+      }
+
+    });
 
     // Q key: switch tile
     if ( this.controls.key( 81 ) ) {
