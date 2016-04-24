@@ -166,6 +166,12 @@ class MachineChunk extends TileMap {
 
   }
 
+  update ( dt, t, map ) {
+
+    super.update( dt, t, map );
+
+  }
+
 }
 
 export default MachineChunk;

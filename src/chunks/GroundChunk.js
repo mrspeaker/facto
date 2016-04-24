@@ -22,7 +22,15 @@ class GroundChunk extends TileMap {
 
       new Array( chunkW * chunkH ),
 
-      ( ) => ( { x: Math.random() * 4 | 0, y: 0 } )
+      ( ) => {
+
+        const fuel = Math.random() > 0.05 ? 0 : ( Math.random() * 10 + 5 | 0 );
+        return {
+          fuel,
+          x: Math.random() * 4 | 0,
+          y: fuel > 0 ? 1 : 0
+        };
+      }
 
     );
 

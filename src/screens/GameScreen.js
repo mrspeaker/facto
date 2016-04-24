@@ -183,7 +183,7 @@ class GameScreen extends Container {
 
 
       // TODO: Move drag direction detection to mouse controls
-      const samples = this.mouse_past.slice(-4).reverse();
+      const samples = this.mouse_past.slice( -4 ).reverse();
       let dir = this.lastDir ||  Dirs.indexToDir( this.rot );
       let dx = 0;
       let dy = 0;
@@ -236,7 +236,7 @@ class GameScreen extends Container {
 
         earth.setTile(
           {
-            type: env.tiles[this.tile],
+            type: env.tiles[ this.tile ],
             dir
           },
           { x, y });
@@ -256,7 +256,7 @@ class GameScreen extends Container {
     }
 
     // Check for inventory keys
-    [0, 1, 2, 3, 4, 5].forEach( i => {
+    [ 0, 1, 2, 3, 4, 5 ].forEach( i => {
 
       if ( this.controls.key( 49 + i ) ) {
 
