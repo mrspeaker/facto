@@ -13,5 +13,6 @@ Types:
 Next todos:
 
 * reading ground chunk from machine chunk
+* preview hover square
 * another item.
 * transformer a->b

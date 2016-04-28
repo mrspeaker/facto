@@ -89,6 +89,11 @@ class GameScreen extends Container {
       t.frame.y = i;
     });
 
+    this.hover = new Sprite( new  Texture( "./res/images/hover.png" ) );
+    this.hover.pos.x = 32;
+    this.hover.pos.y = 32;
+    this.add( this.hover );
+
   }
 
   setTileUI () {
@@ -112,6 +117,19 @@ class GameScreen extends Container {
       this.mouse.wheelDt = 0;
 
     }
+
+    if ( mouse.x > 0 && mouse.y < env.h - 100 ) {
+
+      this.hover.pos.x = ( mouse.x / 32 | 0 ) * 32;
+      this.hover.pos.y = ( mouse.y / 32 | 0 ) * 32;
+
+    } else {
+
+      this.hover.pos.x = this.hover.pos.y = -32;
+
+    }
+
+    const my = mouse.y;
 
     // Clickin' and touchin'
     if ( mouse.left ) {
@@ -263,7 +281,8 @@ class GameScreen extends Container {
 
         this.tile = i;
         this.setTileUI();
-        this.selected.pos.x = 350 + ( i * 40 );
+        this.selected.pos.x = 30;
+        this.doMove = false;
 
       }
 
