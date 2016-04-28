@@ -70,22 +70,22 @@ class GameScreen extends Container {
 
     this.uiTile = new UITile();
     this.uiTile.pos.x = 45;
-    this.uiTile.pos.y = env.h - 70;
+    this.uiTile.pos.y = env.h - 48;
     this.tile = 1;
     this.rot = 1;
     this.add( this.uiTile );
     this.setTileUI();
 
     this.selected = new Sprite(new Texture("./res/images/hud_selected.png"));
-    this.selected.pos.y = env.h - 80;
+    this.selected.pos.y = env.h - 60;
     this.selected.pos.x = 30;
     this.add( this.selected );
 
     this.quiver = Array(6).fill().map(() => new UITile());
     this.quiver.forEach((t, i) => {
       this.add(t);
-      t.pos.x = i * 40 + 370;
-      t.pos.y = env.h - 100;
+      t.pos.x = i * 40 + 10;//370;
+      t.pos.y = env.h - 98;
       t.frame.y = i;
     });
 
@@ -128,9 +128,10 @@ class GameScreen extends Container {
 
           this.tile = parseInt( pressed.slice( -1 ), 10 );
           this.rot = 1;
-          this.selected.pos.x = 350 + ( this.tile * 40 );
+          this.selected.pos.x = 30;
           this.setTileUI();
           mouse.left = false;
+          this.doMove = false;
           return;
 
         }

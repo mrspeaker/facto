@@ -28,39 +28,47 @@ class HUD extends Sprite {
 
     }
 
-    if ( x < 117 ) {
+    // Bottom row of hud
+    if ( yo > 40 ) {
 
-      return "SWITCH";
+      if ( x < 117 ) {
+
+        return "SWITCH";
+
+      }
+
+      // Left side (rotate)
+      if ( x < 215 ) {
+
+        return "ROTATE";
+
+      }
+
+      if ( x <= 312 ) {
+
+        return "MOVE";
+
+      }
+
+      // Right side
+      if ( x < 360 ) {
+
+        return yo >= 40 + 30 ? "DOWN" : "UP";
+
+      }
 
     }
 
-    // Left side (rotate)
-    if ( x < 215 ) {
+    else {
 
-      return "ROTATE";
+      const button = ( x - 10) / 40 | 0;
+      if ( button <= 5 ) {
+        return "BUTTON_" + button;
+      }
 
-    }
-
-    if ( x <= 312 ) {
-
-      return "MOVE";
-
-    }
-
-    // Right side
-    if ( x < 360 ) {
-
-      return yo <= 50 ? "UP" : "DOWN";
-
-    }
-
-    const button = (x - 360) / 40 | 0;
-    if ( button <= 5 ) {
-      return "BUTTON_" + button;
     }
 
     return "";
-
 
   }
 
