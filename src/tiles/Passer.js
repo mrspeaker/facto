@@ -54,11 +54,15 @@ class Passer extends Tile {
     }
 
     if (this.frame.x < 0 || this.frame.x > 3) {
+
       // Bad frame... fix this... item rel position is still moving even when stuck!
       this.frame.y = 0;
       this.frame.x = 0;
+
     } else {
+
       this.frame.y = Dirs.toIndex( this.dir );
+      
     }
 
     if ( ! item ) {
