@@ -39,11 +39,12 @@ class MachineChunk extends TileMap {
         const isLeft = xp === 4 && yp > 2 && yp < 9;
         const isRight = xp === 11 && yp > 1 && yp < 9;
 
-        const tile = isTop ? { type: "Passer", dir: Dirs.RIGHT } :
+        const tile2 = isTop ? { type: "Passer", dir: Dirs.RIGHT } :
           isBot ? { type: "Passer", dir: Dirs.LEFT } :
           isLeft ? { type: "Passer", dir: Dirs.UP } :
           isRight ? { type: "Passer", dir: Dirs.DOWN } :
           { type: "Blank" };
+        const tile = Math.random() < 0.005 ? { type: "Source" } : { type: "Blank" };
 
         return tile;
 
@@ -60,17 +61,7 @@ class MachineChunk extends TileMap {
     }, ( tileDeets, i ) => {
 
       const { type, dir } = tileDeets;
-      let tile;
-
-      if ( type === "Passer" ) {
-
-        tile = new Passer( dir );
-
-      } else {
-
-        tile = new Blank();
-
-      }
+      let tile = new tileClasses[ type ]( dir );
 
       // Set tile X an Y positions
       tile.x = i % chunkW;

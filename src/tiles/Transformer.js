@@ -36,8 +36,7 @@ class Transformer extends Tile {
 
   update ( dt, t, map ) {
 
-    const { dir, pos } = this;
-    let { item } = this;
+    const { pos, item } = this;
 
     if ( this.state === "CONSUMING" ) {
 
@@ -48,10 +47,9 @@ class Transformer extends Tile {
       }
 
       map.removeItem(  item );
-      this.item = null;
-
       this.frame.y = Dirs.toIndex( this.dir );
       this.frame.x++;
+      this.item = null;
 
       if ( ++this.count === this.requiredCount ) {
 
@@ -65,37 +63,30 @@ class Transformer extends Tile {
 
     else if ( this.state === "PRODUCING" ) {
 
-      if ( this.stateTime++ < 100 ) {
+      if ( ( this.stateTime += dt ) < 800 ) {
+
         return;
-      }
-      if ( ! item ) {
-
-        item = this.item = new Bronze();
-        const { x, y, } = map.worldToTilePosition( pos );
-        const next = map.getTileInDir( x, y, dir );
-        //if ( next.accepts( item ) ) {
-        
-          map.addItem( item, map.worldToTilePosition( pos ), true );
-
-
 
       }
 
-      this.state === "LOADED";
+      this.item = new Bronze();
+      map.addItem( this.item, map.worldToTilePosition( pos ), true );
+      this.itemToCentre();
+      this.state = "COOLING";
       this.stateTime = 0;
 
+    }
 
-      /*const { x, y, } = map.worldToTilePosition( pos );
-      const next = map.getTileInDir( x, y, dir );
-      if ( next.accepts( item ) ) {
+    else if ( this.state === "COOLING" ) {
 
-        map.addItem( item, map.worldToTilePosition( next.pos ) );
-        this.item = null;
-        this.state = "CONSUMING";
-        this.stateTime = 0;
-        this.frame.x = 0;
+      if ( ( this.stateTime += dt ) < 800 ) {
 
-      }*/
+        return;
+
+      }
+
+      this.state = "LOADED";
+      this.stateTime = 0;
 
     }
 
@@ -108,9 +99,9 @@ class Transformer extends Tile {
 
   reliquishItem () {
 
-    const { item } = this;
+    const { state, item } = this;
 
-    if ( ! item ) {
+    if ( state !== "LOADED"  || ! item ) {
 
       return null;
 

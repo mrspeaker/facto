@@ -67,13 +67,27 @@ class Tile extends TileSprite {
       this.item_x = xo;
       this.item_y = yo;
 
-      const itemHalfWidth = 8;
-      item.pos.x = x * tileW + this.item_x - itemHalfWidth;
-      item.pos.y = y * tileH + this.item_y - itemHalfWidth;
+      item.pos.x = x * tileW + this.item_x - item.w / 2;
+      item.pos.y = y * tileH + this.item_y - item.h / 2;
 
     }
 
     return accepts;
+
+  }
+
+  itemToCentre () {
+
+    const { item, pos } = this;
+
+    if ( ! item ) {
+
+      return;
+
+    }
+
+    item.pos.x = pos.x + item.w / 2;
+    item.pos.y = pos.y + item.h / 2;
 
   }
 

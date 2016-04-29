@@ -19,7 +19,7 @@ class Source extends Tile {
     super( mapTiles, 32, 32 );
 
     this.dir = dir;
-    this.frame.y = Dirs.toIndex( dir );
+    this.frame.y = 0;//Dirs.toIndex( dir );
     this.frame.x = 0;
 
     this.state = "IDLE";
@@ -35,33 +35,56 @@ class Source extends Tile {
 
   update ( dt, t, map ) {
 
-    const { dir, pos } = this;
-    let { item } = this;
+    const { pos } = this;
 
-    this.stateTime += dt;
-    if ( this.stateTime < 3000 ) {
+    if ( this.state === "IDLE" ) {
 
-      return;
+      this.stateTime += dt;
+      if ( this.stateTime < 2000 ) {
 
-    }
+        return;
 
-    if ( ! item ) {
+      }
 
-      item = this.item = new Iron();
-
-    }
-
-    const { x, y, } = map.worldToTilePosition( pos );
-    const next = map.getTileInDir( x, y, dir );
-    if ( next.accepts( item ) ) {
-
+      const item = this.item = new Iron();
+      map.addItem( item, map.worldToTilePosition( pos ), true );
+      this.itemToCentre();
+      this.state = "COOKED";
       this.stateTime = 0;
-      map.addItem( item, map.worldToTilePosition( next.pos ) );
-      this.item = null;
 
     }
 
+    else if ( this.state === "COOKED" ) {
+
+      this.stateTime += dt;
+      if ( this.stateTime < 1000 ) {
+
+        return;
+
+      }
+
+      this.state = "LOADED";
+      this.stateTime = 0;
+
+    }
+
+  }
+
+  reliquishItem () {
+
+    const { state, item } = this;
+
+    if ( state !== "LOADED" || ! item ) {
+
+      return null;
+
+    }
+
+    this.state = "IDLE";
     this.stateTime = 0;
+    this.item = null;
+
+    return item;
 
   }
 

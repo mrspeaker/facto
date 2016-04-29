@@ -6,12 +6,11 @@ Types:
 * [done] takergiver (inserter)
 * source: extracts from groundchunk
 * switcher: passer, but alternates if choice
-* transformer: item a -> b
+* [done] transformer: item a -> b
+* transformer: a + b -> c
 * [done] destroyer: destroys.
-
 
 Next todos:
 
 * reading ground chunk from machine chunk
-* another item.
-* 3xa -> b ... "crafting passers?"
+* fix curser/hover scaling
