@@ -18,6 +18,7 @@ class Transformer extends Tile {
     super( mapTiles, 32, 32 );
 
     this.dir = dir;
+    this.frame.y = Dirs.toIndex( this.dir );
 
     this.state = "CONSUMING";
     this.stateTime = 0;

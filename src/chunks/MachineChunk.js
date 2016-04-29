@@ -10,7 +10,7 @@ import Dirs from "../Dirs";
 import env from "../env";
 import Iron from "../items/Iron";
 
-const tileClasses = { Blank, Source, Passer, Transformer, Destroyer, TakerGiver };
+const tileClasses = { Blank, Source, Passer, Transformer, Destroyer, TakerGiver, Switcher };
 
 const {
   tileW,

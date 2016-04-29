@@ -81,7 +81,7 @@ class GameScreen extends Container {
     this.selected.pos.x = 30;
     this.add( this.selected );
 
-    this.quiver = Array(6).fill().map(() => new UITile());
+    this.quiver = Array(7).fill().map(() => new UITile());
     this.quiver.forEach((t, i) => {
       this.add(t);
       t.pos.x = i * 40 + 10;//370;
@@ -128,8 +128,6 @@ class GameScreen extends Container {
       this.hover.pos.x = this.hover.pos.y = -32;
 
     }
-
-    const my = mouse.y;
 
     // Clickin' and touchin'
     if ( mouse.left ) {

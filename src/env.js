@@ -12,7 +12,7 @@ const env = {
   tileH: 32,
 
   numTileTypes: 6,
-  tiles: [ "Blank", "Source", "Passer", "Transformer", "Destroyer", "TakerGiver" ]
+  tiles: [ "Blank", "Source", "Passer", "TakerGiver", "Transformer", "Switcher", "Destroyer" ]
 
 };
 
