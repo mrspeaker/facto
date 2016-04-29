@@ -10,11 +10,12 @@ const mapTiles = new Texture( "res/images/blank.png" );
 
 class Blank extends Tile {
 
+  type = "Blank";
+
   constructor () {
 
     super( mapTiles, 32, 32 );
 
-    this.type = "Blank";
     this.frame.x = 0;
     this.frame.y = 0;
 

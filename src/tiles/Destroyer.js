@@ -11,11 +11,11 @@ const mapTiles = new Texture( "res/images/destroyer.png" );
 
 class Destroyer extends Tile {
 
+  type = "Destroyer";
+
   constructor ( dir ) {
 
     super( mapTiles, 32, 32 );
-
-    this.type = "Destroyer";
     this.dir = dir;
 
   }
@@ -31,7 +31,6 @@ class Destroyer extends Tile {
     }
 
     map.removeItem(  item );
-    this.acceptedItem = false;
     this.item = null;
 
   }

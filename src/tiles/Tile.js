@@ -37,7 +37,6 @@ class Tile extends TileSprite {
 
       this.item = item;
       this.fromTile = fromTile;
-      this.acceptedItem = true;
 
       let xo = tileW / 2 | 0;
       let yo = tileH / 2 | 0;

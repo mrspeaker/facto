@@ -4,12 +4,13 @@ import Source from "../tiles/Source";
 import Passer from "../tiles/Passer";
 import Switcher from "../tiles/Switcher";
 import TakerGiver from "../tiles/TakerGiver";
+import Transformer from "../tiles/Transformer";
 import Destroyer from "../tiles/Destroyer";
 import Dirs from "../Dirs";
 import env from "../env";
 import Iron from "../items/Iron";
 
-const tileClasses = { Blank, Source, Passer, Switcher, Destroyer, TakerGiver };
+const tileClasses = { Blank, Source, Passer, Transformer, Destroyer, TakerGiver };
 
 const {
   tileW,

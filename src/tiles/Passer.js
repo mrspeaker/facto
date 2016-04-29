@@ -11,13 +11,13 @@ const mapTiles = new Texture( "res/images/passer.png" );
 
 class Passer extends Tile {
 
+  type = "Passer";
   speed = 0.05;
 
   constructor ( dir ) {
 
     super( mapTiles, 32, 32 );
 
-    this.type = "Passer";
     this.dir = dir;
     this.frame.y = Dirs.toIndex( dir );
     this.frame.x = 0;
@@ -62,7 +62,7 @@ class Passer extends Tile {
     } else {
 
       this.frame.y = Dirs.toIndex( this.dir );
-      
+
     }
 
     if ( ! item ) {

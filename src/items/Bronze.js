@@ -4,19 +4,19 @@ const { TileSprite, Texture } = pop;
 const items = new Texture("res/images/items.png");
 
 
-class Iron extends TileSprite {
+class Bronze extends TileSprite {
 
-  type = "Iron";
+  type = "Bronze";
 
   constructor () {
 
     super( items, 16, 16 );
 
-    this.frame.y = 0;
+    this.frame.y = 1;
     this.relPos = { x: 0, y: 0 };
 
   }
 
 }
 
-export default Iron;
+export default Bronze;

@@ -11,13 +11,13 @@ const mapTiles = new Texture( "res/images/switcher.png" );
 
 class Switcher extends Tile {
 
+  type = "Switcher";
   speed = 0.05;
 
   constructor ( dir ) {
 
     super( mapTiles, 32, 32 );
 
-    this.type = "Switcher";
     this.dir = dir;
     this.lastDir = dir;
 

@@ -10,6 +10,7 @@ const mapTiles = new Texture( "res/images/takergiver.png" );
 
 class TakerGiver extends Tile {
 
+  type = "TakerGiver";
   processingTime = 1000;
   speed = 0.025;
 
@@ -17,7 +18,6 @@ class TakerGiver extends Tile {
 
     super( mapTiles, 32, 32 );
 
-    this.type = "TakerGiver";
     this.dir = dir;
     this.frame.y = Dirs.toIndex( dir );
     this.frame.x = 0;
