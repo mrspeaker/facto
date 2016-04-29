@@ -114,11 +114,11 @@ class MachineChunk extends TileMap {
 
   }
 
-  addItem ( item, pos ) {
+  addItem ( item, pos, force ) {
 
     const tile = this.tileAtPosition( pos );
 
-    if ( ! tile || ! tile.acceptItem( item ) ) {
+    if ( ! tile || ( ! force && ! tile.acceptItem( item ) ) ) {
 
       return null;
 

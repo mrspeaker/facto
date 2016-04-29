@@ -71,10 +71,21 @@ class Transformer extends Tile {
       if ( ! item ) {
 
         item = this.item = new Bronze();
+        const { x, y, } = map.worldToTilePosition( pos );
+        const next = map.getTileInDir( x, y, dir );
+        //if ( next.accepts( item ) ) {
+        
+          map.addItem( item, map.worldToTilePosition( pos ), true );
+
+
 
       }
 
-      const { x, y, } = map.worldToTilePosition( pos );
+      this.state === "LOADED";
+      this.stateTime = 0;
+
+
+      /*const { x, y, } = map.worldToTilePosition( pos );
       const next = map.getTileInDir( x, y, dir );
       if ( next.accepts( item ) ) {
 
@@ -84,9 +95,33 @@ class Transformer extends Tile {
         this.stateTime = 0;
         this.frame.x = 0;
 
-      }
+      }*/
 
     }
+
+    else if ( this.state === "LOADED" ) {
+
+
+    }
+
+  }
+
+  reliquishItem () {
+
+    const { item } = this;
+
+    if ( ! item ) {
+
+      return null;
+
+    }
+
+    this.state = "CONSUMING";
+    this.stateTime = 0;
+    this.frame.x = 0;
+    this.item = null;
+
+    return item;
 
   }
 
