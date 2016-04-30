@@ -10,8 +10,6 @@ const mapTiles = new Texture( "res/images/source.png" );
 
 class Source extends Tile {
 
-  type = "Source";
-  rotates = false;
   static type = "Source";
   static rotates = false;
   static icon = { x: 0, y: 1 };

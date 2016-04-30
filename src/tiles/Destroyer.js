@@ -9,8 +9,6 @@ const mapTiles = new Texture( "res/images/destroyer.png" );
 
 class Destroyer extends Tile {
 
-  type = "Destroyer";
-  rotates = false;
   static type = "Destroyer";
   static rotates = false;
   static icon = { x: 0, y: 6 };
