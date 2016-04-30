@@ -5,11 +5,14 @@ const {
   Texture
 } = pop;
 
-const mapTiles = new Texture( "res/images/destroyer.png" );
+const mapTiles = new Texture( "res/images/source.png" );
 
 class Box extends Tile {
 
-  type = "Destroyer";
+  static type = "Box";
+  static rotates = false;
+  static icon = { x: 0, y: 1 };
+
 
   constructor ( dir ) {
 

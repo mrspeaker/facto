@@ -1,16 +1,7 @@
 import TileMap from "../../lib/TileMap";
-import Blank from "../tiles/Blank";
-import Source from "../tiles/Source";
-import Passer from "../tiles/Passer";
-import Switcher from "../tiles/Switcher";
-import TakerGiver from "../tiles/TakerGiver";
-import Transformer from "../tiles/Transformer";
-import Destroyer from "../tiles/Destroyer";
 import Dirs from "../Dirs";
 import env from "../env";
 import Iron from "../items/Iron";
-
-const tileClasses = { Blank, Source, Passer, Transformer, Destroyer, TakerGiver, Switcher };
 
 const {
   tileW,
@@ -61,7 +52,7 @@ class MachineChunk extends TileMap {
     }, ( tileDeets, i ) => {
 
       const { type, dir } = tileDeets;
-      let tile = new tileClasses[ type ]( dir );
+      const tile = new env.tiles[ type ]( dir );
 
       // Set tile X an Y positions
       tile.x = i % chunkW;
@@ -145,7 +136,7 @@ class MachineChunk extends TileMap {
 
     }
 
-    const newTile = new tileClasses[ type ]( dir );
+    const newTile = new env.tiles[ type ]( dir );
     newTile.x = oldTile.x;
     newTile.y = oldTile.y;
     newTile.pos.x = oldTile.pos.x;

@@ -1,3 +1,5 @@
+import tiles from "./tiles/";
+
 const env = {
 
   w: window.innerWidth,
@@ -12,7 +14,7 @@ const env = {
   tileH: 32,
 
   numTileTypes: 6,
-  tiles: [ "Blank", "Source", "Passer", "TakerGiver", "Transformer", "Switcher", "Destroyer" ]
+  tiles
 
 };
 

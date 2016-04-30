@@ -1,7 +1,5 @@
 import pop from "pop";
 import Tile from "./Tile";
-import Dirs from "../Dirs";
-import env from "../env";
 
 const {
   Texture
@@ -11,7 +9,10 @@ const mapTiles = new Texture( "res/images/destroyer.png" );
 
 class Destroyer extends Tile {
 
-  type = "Destroyer";
+  static type = "Destroyer";
+  static rotates = false;
+  static icon = { x: 0, y: 6 };
+
 
   constructor ( dir ) {
 

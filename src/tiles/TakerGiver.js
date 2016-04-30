@@ -10,7 +10,10 @@ const mapTiles = new Texture( "res/images/takergiver.png" );
 
 class TakerGiver extends Tile {
 
-  type = "TakerGiver";
+  static type = "TakerGiver";
+  static rotates = true;
+  static icon = { x: 0, y: 3 };
+
   processingTime = 1000;
   speed = 0.025;
 

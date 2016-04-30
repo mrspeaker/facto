@@ -11,7 +11,10 @@ const mapTiles = new Texture( "res/images/switcher.png" );
 
 class Switcher extends Tile {
 
-  type = "Switcher";
+  static type = "Switcher";
+  static rotates = true;
+  static icon = { x: 0, y: 5 };
+
   speed = 0.05;
 
   constructor ( dir ) {

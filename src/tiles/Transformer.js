@@ -11,7 +11,9 @@ const mapTiles = new Texture( "res/images/transformer.png" );
 
 class Transformer extends Tile {
 
-  type = "Transformer";
+  static type = "Transformer";
+  static rotates = false;
+  static icon = { x: 0, y: 4 };
 
   constructor ( dir ) {
 

@@ -1,6 +1,5 @@
 import pop from "pop";
 import Tile from "./Tile";
-import Dirs from "../Dirs";
 import Iron from "../items/Iron";
 
 const {
@@ -11,7 +10,10 @@ const mapTiles = new Texture( "res/images/source.png" );
 
 class Source extends Tile {
 
-  type = "Source";
+  static type = "Source";
+  static rotates = false;
+  static icon = { x: 0, y: 1 };
+
   speed = 0.03;
 
   constructor ( dir ) {

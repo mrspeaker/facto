@@ -1,11 +1,20 @@
-var pop = require("pop");
-var tiles = new pop.Texture("res/images/tiles.png");
+import pop from "pop";
+const tiles = new pop.Texture( "res/images/tiles.png" );
 
-function UITile () {
-  pop.TileSprite.call(this, tiles, 32, 32);
-  this.frame = {x:0, y:0};
+const {
+  TileSprite
+} = pop;
+
+class UITile extends TileSprite {
+
+  constructor ( icon, rotates ) {
+
+    super( tiles, 32, 32 );
+    this.frame = { x: icon.x, y: icon.y };
+    this.rotates = rotates;
+
+  }
+
 }
 
-UITile.prototype = Object.create(pop.TileSprite.prototype);
-
-module.exports = UITile;
+export default UITile;

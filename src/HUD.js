@@ -62,7 +62,7 @@ class HUD extends Sprite {
     else {
 
       const button = ( x - 10 ) / 40 | 0;
-      if ( button <= 6 ) {
+      if ( button < Object.keys( env.tiles ).length ) {
         return "BUTTON_" + button;
       }
 

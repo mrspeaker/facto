@@ -68,7 +68,7 @@ class GameScreen extends Container {
 
     this.add( this.hud );
 
-    this.uiTile = new UITile();
+    this.uiTile = new UITile( {x: 0, y: 0}, false );
     this.uiTile.pos.x = 45;
     this.uiTile.pos.y = env.h - 48;
     this.tile = 1;
@@ -81,12 +81,14 @@ class GameScreen extends Container {
     this.selected.pos.x = 30;
     this.add( this.selected );
 
-    this.quiver = Array(7).fill().map(() => new UITile());
-    this.quiver.forEach((t, i) => {
-      this.add(t);
-      t.pos.x = i * 40 + 10;//370;
+    this.quiver = Object.keys( env.tiles ).map( ( tile, i ) => {
+
+      const clz = env.tiles[ tile ];
+      const t = new UITile( clz.icon, clz.rotates );
+      this.add( t );
+      t.pos.x = i * 40 + 10;
       t.pos.y = env.h - 98;
-      t.frame.y = i;
+
     });
 
     this.hover = new Sprite( new  Texture( "./res/images/hover.png" ) );
@@ -99,7 +101,7 @@ class GameScreen extends Container {
   setTileUI () {
 
     this.uiTile.frame.x = this.rot;
-    this.uiTile.frame.y = this.tile ;
+    this.uiTile.frame.y = env.tiles[ Object.keys( env.tiles )[ this.tile ] ].icon.y;
 
   }
 
@@ -253,7 +255,7 @@ class GameScreen extends Container {
 
         earth.setTile(
           {
-            type: env.tiles[ this.tile ],
+            type: env.tiles[ Object.keys( env.tiles )[ this.tile ] ].type,
             dir
           },
           { x, y });
