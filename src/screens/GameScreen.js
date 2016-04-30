@@ -76,7 +76,7 @@ class GameScreen extends Container {
     this.add( this.uiTile );
     this.setTileUI();
 
-    this.selected = new Sprite(new Texture("./res/images/hud_selected.png"));
+    this.selected = new Sprite( new Texture( "./res/images/hud_selected.png" ) );
     this.selected.pos.y = env.h - 60;
     this.selected.pos.x = 30;
     this.add( this.selected );
@@ -277,7 +277,7 @@ class GameScreen extends Container {
     }
 
     // Check for inventory keys
-    [ 0, 1, 2, 3, 4, 5 ].forEach( i => {
+    Object.keys( env.tiles ).forEach( ( t, i ) => {
 
       if ( this.controls.key( 49 + i ) ) {
 

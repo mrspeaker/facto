@@ -1,5 +1,6 @@
 import pop from "pop";
 import Tile from "./Tile";
+import env from "../env";
 
 const {
   Texture
@@ -15,15 +16,42 @@ class Box extends Tile {
 
   constructor () {
 
-    super( mapTiles, 32, 32 );
+    super( mapTiles, env.tileW, env.tileH );
     this.count = 0;
-    this.maxCount = 4;
+    this.maxCount = 50;
+    this.animFrames = mapTiles.img.width / env.tileW - 1;
+
+    this.storage = [];
+
+  }
+
+  addCount ( amount ) {
+
+    this.count += amount;
+    this.frame.x = this.count / this.maxCount * this.animFrames | 0;
 
   }
 
   accepts () {
 
     return ! this.item && this.count < this.maxCount;
+
+  }
+
+  reliquishItem ( map ) {
+
+    if ( ! this.storage.length ) {
+
+      return null;
+
+    }
+
+    const item = this.storage[ 0 ];
+    this.addCount( -1 );
+    this.storage = this.storage.slice( 1 );
+    map.addItem( item, map.worldToTilePosition( this.pos ), true );
+
+    return item;
 
   }
 
@@ -37,10 +65,10 @@ class Box extends Tile {
 
     }
 
-    this.count++;
-    this.frame.x = this.count;
+    this.addCount( 1 );
 
     map.removeItem(  item );
+    this.storage.push( item );
     this.item = null;
 
   }

@@ -92,7 +92,7 @@ class TakerGiver extends Tile {
       }
       else {
 
-        const nextItem = next.reliquishItem();
+        const nextItem = next.reliquishItem( map );
         if ( nextItem ) {
 
           this.acceptItem( nextItem, next );
