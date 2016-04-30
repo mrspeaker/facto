@@ -5,19 +5,25 @@ const {
   Texture
 } = pop;
 
-const mapTiles = new Texture( "res/images/source.png" );
+const mapTiles = new Texture( "res/images/box.png" );
 
 class Box extends Tile {
 
   static type = "Box";
   static rotates = false;
-  static icon = { x: 0, y: 1 };
+  static icon = { x: 0, y: 7 };
 
-
-  constructor ( dir ) {
+  constructor () {
 
     super( mapTiles, 32, 32 );
-    this.dir = dir;
+    this.count = 0;
+    this.maxCount = 4;
+
+  }
+
+  accepts () {
+
+    return ! this.item && this.count < this.maxCount;
 
   }
 
@@ -30,6 +36,9 @@ class Box extends Tile {
       return;
 
     }
+
+    this.count++;
+    this.frame.x = this.count;
 
     map.removeItem(  item );
     this.item = null;

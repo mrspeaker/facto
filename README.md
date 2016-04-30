@@ -17,6 +17,7 @@ Next todos:
   - programatically add tiles
   - auto add to gui
   - auto assign to key
+* Remove rotation things from non-rotate-y tiles
 * reading ground chunk from machine chunk
 * can taker-picker stuck items
 * fix out-of-bounds clicks

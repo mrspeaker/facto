@@ -100,8 +100,10 @@ class GameScreen extends Container {
 
   setTileUI () {
 
-    this.uiTile.frame.x = this.rot;
-    this.uiTile.frame.y = env.tiles[ Object.keys( env.tiles )[ this.tile ] ].icon.y;
+    const clz = env.tiles[ Object.keys( env.tiles )[ this.tile ] ];
+
+    this.uiTile.frame.x = clz.rotates ? this.rot : clz.icon.x;
+    this.uiTile.frame.y = clz.icon.y;
 
   }
 
