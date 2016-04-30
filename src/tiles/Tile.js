@@ -40,8 +40,7 @@ class Tile extends TileSprite {
 
       let xo = tileW / 2 | 0;
       let yo = tileH / 2 | 0;
-
-      if ( fromTile ) {
+      if ( fromTile && fromTile.rotates ) {
 
         const dir = Dirs.opposite( fromTile.dir );
 
@@ -62,7 +61,6 @@ class Tile extends TileSprite {
         }
 
       }
-
 
       this.item_x = xo;
       this.item_y = yo;

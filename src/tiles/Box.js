@@ -10,6 +10,8 @@ const mapTiles = new Texture( "res/images/box.png" );
 
 class Box extends Tile {
 
+  type = "Box";
+  rotates = false;
   static type = "Box";
   static rotates = false;
   static icon = { x: 0, y: 7 };
@@ -19,7 +21,7 @@ class Box extends Tile {
     super( mapTiles, env.tileW, env.tileH );
     this.count = 0;
     this.maxCount = 50;
-    this.animFrames = mapTiles.img.width / env.tileW - 1;
+    this.fillFrames = mapTiles.img.width / env.tileW - 1;
 
     this.storage = [];
 
@@ -28,7 +30,7 @@ class Box extends Tile {
   addCount ( amount ) {
 
     this.count += amount;
-    this.frame.x = this.count / this.maxCount * this.animFrames | 0;
+    this.frame.x = this.count / this.maxCount * this.fillFrames | 0;
 
   }
 

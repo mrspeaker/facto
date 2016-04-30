@@ -1,6 +1,7 @@
 import pop from "pop";
 import Tile from "./Tile";
 import Dirs from "../Dirs";
+import env from "../env";
 
 const {
   Texture
@@ -10,6 +11,8 @@ const mapTiles = new Texture( "res/images/takergiver.png" );
 
 class TakerGiver extends Tile {
 
+  type = "TakerGiver";
+  rotates = true;
   static type = "TakerGiver";
   static rotates = true;
   static icon = { x: 0, y: 3 };
@@ -32,35 +35,36 @@ class TakerGiver extends Tile {
 
   updateAnimFrame ( dt, t ) {
 
-    this.frame.x = ( t / 600 | 0 ) % 2;
+    const { speed, dir, pos } = this;
+    const { tileW, tileH } = env;
 
     if ( this.dir === Dirs.RIGHT ) {
 
-      this.frame.x = ! this.item ? 3 : ( ( this.item_x - 16 ) / 4 ) | 0;
+      this.frame.x = ! this.item ? 3 : this.item_x / ( tileW / 4 ) | 0;
 
     }
 
     if ( this.dir === Dirs.LEFT ) {
 
-      this.frame.x = ! this.item ? 3 : 3 - ( ( this.item_x - 1 ) / 4 ) | 0;
+      this.frame.x = ! this.item ? 0 : ( ( tileW - this.item_x ) / ( tileW / 4 ) | 0 ) ;
 
     }
 
     if ( this.dir === Dirs.DOWN ) {
 
-      this.frame.x = ! this.item ? 2 : ( ( this.item_y - 16 ) / 4 ) | 0;
+      this.frame.x = ! this.item ? 2 : ( this.item_y / ( tileH / 4 ) | 0 );
 
     }
 
     if ( this.dir === Dirs.UP ) {
 
-      this.frame.x = ! this.item ? 2 : ( ( Math.max(0, 15 - this.item_y) ) / 4 ) | 0;
+      this.frame.x = ! this.item ? 2 : ( ( tileH - this.item_y ) / ( tileH / 4 ) | 0 );
 
     }
 
     if (this.frame.x < 0 || this.frame.x > 3) {
 
-      // Bad frame... fix this...
+      // Bad frame... fix this... item rel position is still moving even when stuck!
       this.frame.y = 0;
       this.frame.x = 0;
 
@@ -69,7 +73,6 @@ class TakerGiver extends Tile {
       this.frame.y = Dirs.toIndex( this.dir );
 
     }
-
   }
 
   update ( dt, t, map ) {
@@ -104,13 +107,13 @@ class TakerGiver extends Tile {
       }
 
     } else if ( this.state === "TAKING" ) {
-
       const xo = speed * dt * Dirs.dtHoriz( dir );
       const yo = speed * dt * Dirs.dtVert( dir );
 
       // Logical position
-      // const rxo = this.item_x += xo;
-      // const ryo = this.item_y += yo;
+      this.item_x += xo;
+      this.item_y += yo;
+
       // Screen position
       item.pos.x += xo;
       item.pos.y += yo;

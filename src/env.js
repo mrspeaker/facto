@@ -5,8 +5,8 @@ const env = {
   w: window.innerWidth,
   h: window.innerHeight,
 
-  chunkW: 32,
-  chunkH: 32,
+  chunkW: 18,
+  chunkH: 18,
 
   chunksX: 1,
   chunksY: 1,

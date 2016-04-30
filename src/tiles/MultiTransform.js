@@ -11,6 +11,8 @@ const mapTiles = new Texture( "res/images/transformer.png" );
 
 class MultiTransform extends Tile {
 
+  type = "MultiTransform";
+  rotates = false;
   static type = "MultiTransform";
   static rotates = false;
   static icon = { x: 0, y: 1 };

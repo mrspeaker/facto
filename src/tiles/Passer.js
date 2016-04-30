@@ -12,7 +12,11 @@ const mapTiles = new Texture( "res/images/passer.png" );
 class Passer extends Tile {
 
   static type = "Passer";
+  type = "Passer";
+
   static rotates = true;
+  rotates = true;
+  
   static icon = { x: 0, y: 2 };
 
   speed = 0.05;

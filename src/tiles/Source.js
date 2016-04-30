@@ -10,6 +10,8 @@ const mapTiles = new Texture( "res/images/source.png" );
 
 class Source extends Tile {
 
+  type = "Source";
+  rotates = false;
   static type = "Source";
   static rotates = false;
   static icon = { x: 0, y: 1 };
@@ -44,6 +46,26 @@ class Source extends Tile {
       this.stateTime += dt;
       if ( this.stateTime < 2000 ) {
 
+        this.frame.y = 0;
+        this.frame.x = this.stateTime / 200 % 3 | 0;
+
+        return;
+
+      }
+
+      this.state = "BIRTHING";
+      this.stateTime = 0;
+
+    }
+
+    else if ( this.state === "BIRTHING" ) {
+
+      this.stateTime += dt;
+
+      this.frame.y = 1;
+      this.frame.x = this.stateTime / 300 % 4 | 0;
+      if ( this.stateTime < 1000 ) {
+
         return;
 
       }
@@ -51,6 +73,8 @@ class Source extends Tile {
       const item = this.item = new Iron();
       map.addItem( item, map.worldToTilePosition( pos ), true );
       this.itemToCentre();
+
+
       this.state = "COOKED";
       this.stateTime = 0;
 
@@ -59,7 +83,8 @@ class Source extends Tile {
     else if ( this.state === "COOKED" ) {
 
       this.stateTime += dt;
-      if ( this.stateTime < 1000 ) {
+
+      if ( this.stateTime < 500 ) {
 
         return;
 
@@ -67,6 +92,14 @@ class Source extends Tile {
 
       this.state = "LOADED";
       this.stateTime = 0;
+
+    }
+
+    else if ( this.state === "LOADED" ) {
+
+      this.stateTime += dt;
+      this.frame.x = ( this.stateTime / 300 % 2 | 0) + 3;
+
 
     }
 

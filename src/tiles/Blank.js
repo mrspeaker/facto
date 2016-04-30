@@ -10,8 +10,11 @@ const mapTiles = new Texture( "res/images/blank.png" );
 
 class Blank extends Tile {
 
+  type = "Blank";
+  rotates = false;
   static type = "Blank";
   static rotates = false;
+  
   static icon = { x: 0, y: 0 };
 
   constructor () {

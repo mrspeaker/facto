@@ -1,17 +1,12 @@
 # facto
 
-Types:
+## Next types:
 
-* [done] passer
-* [done] takergiver (inserter)
+* multitransfor: a + b -> c
 * source: extracts from groundchunk
 * switcher: passer, but alternates if choice
-* [done] transformer: item a -> b
-* multitransfor: a + b -> c
-* [done] destroyer: destroys.
-* Box
 
-Next todos:
+## Next todos:
 
 * fix taker/passer anim
 * reading ground chunk from machine chunk
@@ -19,3 +14,8 @@ Next todos:
 * fix out-of-bounds clicks
 * fix cursor/hover scaling
 * don't affect previous items for a few ticks (so it doens't just dump them as drawing)
+
+
+## Notes
+
+* passers could be takers too - easier. No "belt" concept so inserters are overkill
