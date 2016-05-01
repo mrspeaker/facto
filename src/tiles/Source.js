@@ -12,7 +12,7 @@ class Source extends Tile {
 
   static type = "Source";
   static rotates = false;
-  static icon = { x: 0, y: 1 };
+  static icon = { x: 0, y: 9 };
 
   speed = 0.03;
 

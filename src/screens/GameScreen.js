@@ -87,7 +87,7 @@ class GameScreen extends Container {
       const t = new UITile( clz.icon, clz.rotates );
       this.add( t );
       t.pos.x = i * 40 + 10;
-      t.pos.y = env.h - 98;
+      t.pos.y = env.h - 95;
 
     });
 

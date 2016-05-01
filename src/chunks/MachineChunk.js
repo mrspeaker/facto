@@ -62,13 +62,6 @@ class MachineChunk extends TileMap {
 
     } );
 
-    // Add some items
-    setTimeout( () => {
-
-      this.addItem( new Iron(), { x: 4, y: 2 } );
-
-    }, 3000 );
-
     this.pos.x = chunkX * chunkW * tileW;
     this.pos.y = chunkY * chunkH * tileH;
 

@@ -13,7 +13,7 @@ class TakerGiver extends Tile {
 
   static type = "TakerGiver";
   static rotates = true;
-  static icon = { x: 0, y: 3 };
+  static icon = { x: 3, y: 3 };
 
   processingTime = 1000;
   speed = 0.025;
@@ -38,39 +38,39 @@ class TakerGiver extends Tile {
 
     if ( this.dir === Dirs.RIGHT ) {
 
-      this.frame.x = ! this.item ? 3 : this.item_x / ( tileW / 4 ) | 0;
+      this.frame.x = ! this.item ? [0, 4][(t / 400 | 0) % 2] : this.item_x / ( tileW / 4 ) | 0;
 
     }
 
     if ( this.dir === Dirs.LEFT ) {
 
-      this.frame.x = ! this.item ? 0 : ( ( tileW - this.item_x ) / ( tileW / 4 ) | 0 ) ;
+      this.frame.x = ! this.item ? [0, 4][(t / 400 | 0) % 2] : ( ( tileW - this.item_x ) / ( tileW / 4 ) | 0 ) ;
 
     }
 
     if ( this.dir === Dirs.DOWN ) {
 
-      this.frame.x = ! this.item ? 2 : ( this.item_y / ( tileH / 4 ) | 0 );
+      this.frame.x = ! this.item ? [0, 4][(t / 400 | 0) % 2] : ( this.item_y / ( tileH / 4 ) | 0 );
 
     }
 
     if ( this.dir === Dirs.UP ) {
 
-      this.frame.x = ! this.item ? 2 : ( ( tileH - this.item_y ) / ( tileH / 4 ) | 0 );
+      this.frame.x = ! this.item ? [0, 4][(t / 400 | 0) % 2] : ( ( tileH - this.item_y ) / ( tileH / 4 ) | 0 );
 
     }
 
-    if (this.frame.x < 0 || this.frame.x > 3) {
+    //if (this.frame.x < 0 || this.frame.x > 3) {
 
       // Bad frame... fix this... item rel position is still moving even when stuck!
-      this.frame.y = 0;
-      this.frame.x = 0;
+      //this.frame.y = 0;
+      //this.frame.x = 0;
 
-    } else {
+    //} else {
 
       this.frame.y = Dirs.toIndex( this.dir );
 
-    }
+    //}
   }
 
   update ( dt, t, map ) {
@@ -131,6 +131,8 @@ class TakerGiver extends Tile {
           // Blocked!
           item.pos.x -= xo;
           item.pos.y -= yo;
+          this.item_x -= xo;
+          this.item_y -= yo;
 
         }
 

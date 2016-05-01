@@ -29,7 +29,7 @@ class Tile extends TileSprite {
 
   acceptItem ( item, fromTile ) {
 
-    const { x, y } = this;
+    const { x, y, pos } = this;
     const { tileW, tileH } = env;
     const accepts = this.accepts( item );
 
@@ -40,9 +40,15 @@ class Tile extends TileSprite {
 
       let xo = tileW / 2 | 0;
       let yo = tileH / 2 | 0;
-      if ( fromTile && fromTile.constructor.rotates ) {
+      if ( fromTile ) {
 
-        const dir = Dirs.opposite( fromTile.dir );
+        const xx = pos.x - fromTile.pos.x;
+        const yy = pos.y - fromTile.pos.y;
+
+        // const dir = Dirs.opposite( fromTile.dir );
+        const dir = Dirs.opposite(
+          xx < 0 ? Dirs.LEFT : xx > 0 ? Dirs.RIGHT : yy < 0 ? Dirs.UP : Dirs.DOWN
+        );
 
         if ( dir === Dirs.LEFT ) { xo = 0; }
         if ( dir === Dirs.RIGHT ) { xo = tileW; }

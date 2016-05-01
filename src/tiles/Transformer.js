@@ -21,7 +21,7 @@ class Transformer extends Tile {
     super( mapTiles, env.tileW, env.tileH );
 
     this.dir = dir;
-    this.frame.y = Dirs.toIndex( this.dir );
+    this.frame.y = 1;
 
     this.state = "CONSUMING";
     this.stateTime = 0;
@@ -43,6 +43,7 @@ class Transformer extends Tile {
 
     if ( this.state === "CONSUMING" ) {
 
+
       if ( ! item ) {
 
         return;
@@ -50,7 +51,6 @@ class Transformer extends Tile {
       }
 
       map.removeItem(  item );
-      this.frame.y = Dirs.toIndex( this.dir );
       this.frame.x++;
       this.item = null;
 
