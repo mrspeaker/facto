@@ -2,6 +2,7 @@ import pop from "pop";
 import Tile from "./Tile";
 import Dirs from "../Dirs";
 import env from "../env";
+import State from "../State";
 
 const {
   Texture
@@ -15,6 +16,7 @@ class TakerGiver extends Tile {
   static rotates = true;
   static icon = { x: 3, y: 3 };
 
+  state = new State( "IDLE" );
   processingTime = 1000;
   speed = 0.025;
 
@@ -26,14 +28,11 @@ class TakerGiver extends Tile {
     this.frame.y = Dirs.toIndex( dir );
     this.frame.x = 0;
 
-    this.state = "IDLE";
-    this.stateTime = 0;
-
   }
 
   updateAnimFrame ( dt, t ) {
 
-    const { speed, dir, pos } = this;
+    const { dir } = this;
     const { tileW, tileH } = env;
 
     if ( this.dir === Dirs.RIGHT ) {
@@ -68,7 +67,7 @@ class TakerGiver extends Tile {
 
     //} else {
 
-      this.frame.y = Dirs.toIndex( this.dir );
+    this.frame.y = Dirs.toIndex( dir );
 
     //}
   }
@@ -77,9 +76,13 @@ class TakerGiver extends Tile {
 
     const { dir, speed, pos, item } = this;
 
+    this.state.tick( dt, t );
+
     this.updateAnimFrame( dt, t );
 
-    if ( this.state === "IDLE" ) {
+    switch ( this.state.get() ) {
+
+    case "IDLE": {
 
       const { x, y, } = map.worldToTilePosition( pos );
       const next = map.getTileInDir( x, y, Dirs.opposite( dir ) );
@@ -87,24 +90,27 @@ class TakerGiver extends Tile {
       if ( item ) {
 
         // Only here if placed a TakerGiver on a blank tile with item.
-        this.state = "TAKING";
-        this.stateTime = 0;
+        this.state.to( "TAKING" );
 
       }
+
       else {
 
         const nextItem = next.reliquishItem( map );
         if ( nextItem ) {
 
           this.acceptItem( nextItem, next );
-          this.state = "TAKING";
-          this.stateTime = 0;
+          this.state.to( "TAKING" );
 
         }
 
       }
 
-    } else if ( this.state === "TAKING" ) {
+      break;
+    }
+
+    case "TAKING": {
+
       const xo = speed * dt * Dirs.dtHoriz( dir );
       const yo = speed * dt * Dirs.dtVert( dir );
 
@@ -116,7 +122,7 @@ class TakerGiver extends Tile {
       item.pos.x += xo;
       item.pos.y += yo;
 
-      if ( ( this.stateTime += dt ) > this.processingTime ) {
+      if ( this.state.time > this.processingTime ) {
 
         const { x, y, } = map.worldToTilePosition( pos );
         const next = map.getTileInDir( x, y, dir );
@@ -124,7 +130,7 @@ class TakerGiver extends Tile {
         if ( next && next.acceptItem( item, this ) ) {
 
           this.item = null;
-          this.state = "IDLE";
+          this.state.to( "IDLE" );
 
         } else {
 
@@ -137,6 +143,8 @@ class TakerGiver extends Tile {
         }
 
       }
+
+    }
 
     }
 
