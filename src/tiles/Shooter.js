@@ -14,7 +14,7 @@ class Shooter extends Tile {
 
   static type = "Shooter";
   static rotates = true;
-  static icon = { x: 0, y: 4 };
+  static icon = { x: 0, y: 8 };
 
   state = new State( "IDLE" );
   speed = 0.3;
@@ -49,11 +49,7 @@ class Shooter extends Tile {
         return;
 
       }
-
-      //map.removeItem(  item );
       this.frame.x++;
-      //this.item = null;
-
       this.state.to( "SHOOTING" );
 
     }
@@ -83,8 +79,6 @@ class Shooter extends Tile {
 
       }
       this.frame.x++;
-      //this.item = new Bronze();
-      //map.addItem( this.item, map.worldToTilePosition( pos ), true );
       this.state.to( "SHOT" );
 
     }
