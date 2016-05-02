@@ -2,6 +2,7 @@ import pop from "pop";
 import Tile from "./Tile";
 import Dirs from "../Dirs";
 import env from "../env";
+import State from "../State";
 
 const {
   Texture
@@ -13,9 +14,10 @@ class Passer extends Tile {
 
   static type = "Passer";
   static rotates = true;
-  
+
   static icon = { x: 0, y: 2 };
 
+  state = new State( "IDLE" );
   speed = 0.05;
 
   constructor ( dir ) {
@@ -28,90 +30,142 @@ class Passer extends Tile {
 
   }
 
-  update ( dt, t, map ) {
 
-    const { item, speed, dir, pos } = this;
+  updateAnimFrame ( dt, t ) {
+
+    const { item, frame, dir, item_x, item_y } = this;
     const { tileW, tileH } = env;
 
-    if ( this.dir === Dirs.RIGHT ) {
+    if ( dir === Dirs.RIGHT ) {
 
-      this.frame.x = ! this.item ? 3 : this.item_x / ( tileW / 4 ) | 0;
-
-    }
-
-    if ( this.dir === Dirs.LEFT ) {
-
-      this.frame.x = ! this.item ? 3 : ( ( tileW - this.item_x ) / ( tileW / 4 ) | 0 ) ;
+      frame.x = ! item ? 3 : item_x / ( tileW / 4 ) | 0;
 
     }
 
-    if ( this.dir === Dirs.DOWN ) {
+    if ( dir === Dirs.LEFT ) {
 
-      this.frame.x = ! this.item ? 2 : ( this.item_y / ( tileH / 4 ) | 0 );
-
-    }
-
-    if ( this.dir === Dirs.UP ) {
-
-      this.frame.x = ! this.item ? 2 : ( ( tileH - this.item_y ) / ( tileH / 4 ) | 0 );
+      frame.x = ! item ? 3 : ( ( tileW - item_x ) / ( tileW / 4 ) | 0 ) ;
 
     }
 
-    if (this.frame.x < 0 || this.frame.x > 3) {
+    if ( dir === Dirs.DOWN ) {
 
-      // Bad frame... fix this... item rel position is still moving even when stuck!
-      this.frame.y = 0;
-      this.frame.x = 0;
+      frame.x = ! item ? 2 : ( item_y / ( tileH / 4 ) | 0 );
+
+    }
+
+    if ( dir === Dirs.UP ) {
+
+      frame.x = ! item ? 2 : ( ( tileH - item_y ) / ( tileH / 4 ) | 0 );
+
+    }
+
+    if (frame.x < 0 || frame.x > 3) {
+
+      // Bad frame... fix this .. item rel position is still moving even when stuck!
+      frame.y = 0;
+      frame.x = 0;
 
     } else {
 
-      this.frame.y = Dirs.toIndex( this.dir );
+      frame.y = Dirs.toIndex( dir );
 
     }
 
-    if ( ! item ) {
+  }
 
-      return;
+  update ( dt, t, map ) {
 
-    }
+    const { item, dir, speed, pos, state } = this;
+    const { tileW, tileH } = env;
 
-    const xo = speed * dt * Dirs.dtHoriz( dir );
-    const yo = speed * dt * Dirs.dtVert( dir );
+    state.tick( dt );
 
-    // Logical position
-    const rxo = this.item_x += xo;
-    const ryo = this.item_y += yo;
+    this.updateAnimFrame( dt, t );
 
-    // Did move off tile?
-    const wantsToMoveToNextTile = dir === Dirs.UP && ryo < 0 ||
-      dir === Dirs.DOWN && ryo > tileH ||
-      dir === Dirs.LEFT && rxo < 0 ||
-      dir === Dirs.RIGHT && rxo > tileW;
+    switch ( state.get() ) {
+    case "IDLE":
 
-    if ( wantsToMoveToNextTile ) {
+      if ( this.item ) {
 
-      const { x, y, } = map.worldToTilePosition( pos );
-      const next = map.getTileInDir( x, y, dir );
+        state.to( "PASSING" );
 
-      if ( next && next.acceptItem( item, this ) ) {
+      }
+      else  {
 
-        this.item = null;
+        const { x, y, } = map.worldToTilePosition( pos );
+        const next = map.getTileInDir( x, y, Dirs.opposite( dir ) );
+
+        // Don't take from rotate-y things
+        if ( ! next.constructor.rotates ) {
+
+          const nextItem = next.reliquishItem( map );
+          if ( nextItem ) {
+
+            this.acceptItem( nextItem, next );
+            this.state.to( "PASSING" );
+
+          }
+
+        }
 
       }
 
-      return;
+      break;
 
+    case "PASSING": {
+
+      if ( ! item ) {
+
+        return;
+
+      }
+
+      const xo = speed * dt * Dirs.dtHoriz( dir );
+      const yo = speed * dt * Dirs.dtVert( dir );
+
+      // Logical position
+      const rxo = this.item_x += xo;
+      const ryo = this.item_y += yo;
+
+      // Did move off tile?
+      const wantsToMoveToNextTile = dir === Dirs.UP && ryo < 0 ||
+        dir === Dirs.DOWN && ryo > tileH ||
+        dir === Dirs.LEFT && rxo < 0 ||
+        dir === Dirs.RIGHT && rxo > tileW;
+
+      if ( wantsToMoveToNextTile ) {
+
+        const { x, y, } = map.worldToTilePosition( pos );
+        const next = map.getTileInDir( x, y, dir );
+
+        if ( next && next.acceptItem( item, this ) ) {
+
+          this.item = null;
+          this.state.to( "IDLE" );
+
+        }
+
+        return;
+
+      }
+
+      // Screen position
+      item.pos.x += xo;
+      item.pos.y += yo;
+
+      break;
+    }
+    case "TAKING":
+      break;
     }
 
-    // Screen position
-    item.pos.x += xo;
-    item.pos.y += yo;
 
   }
 
   reliquishItem () {
 
-    const { item } = this;
+    const { item, item_x, item_y } = this;
 
     if ( ! item ) {
 
@@ -119,10 +173,8 @@ class Passer extends Tile {
 
     }
 
-    const { item_x, item_y } = this;
-
     if ( item_x <= 15 || item_x >= 17 ) return null;
-    if ( item_y <= 15 || item_x >= 17 ) return null;
+    if ( item_y <= 15 || item_y >= 17 ) return null;
 
     this.item = null;
     return item;
