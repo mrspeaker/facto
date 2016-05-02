@@ -6,7 +6,7 @@ class MouseControls {
   y = -1;
   wheelDt = 0;
 
-  down ( e ) {
+  down ( e, right ) {
     var x, y;
     if (e.touches) {
       x = e.touches[0].pageX;
@@ -17,14 +17,15 @@ class MouseControls {
       y = e.clientY - rect.top | 0;
     }
 
-    this.left = true;
+    this.left = right ? false : true;
+    this.right = right ? true : false;
     this.x = x;
     this.y = y;
   }
 
   up () {
-
     this.left = false;
+    this.right = false;
     this.x = -1;
     this.y = -1;
   }
@@ -55,6 +56,12 @@ class MouseControls {
 
     // Bind event handlers
     document.addEventListener( "mousedown", e => this.down( e ), false );
+    document.addEventListener( "contextmenu", e => {
+
+      e.preventDefault();
+      this.down( e, true );
+
+    }, false );
     document.addEventListener( "touchstart", e => this.down( e ), false );
     document.addEventListener( "mousemove", e => this.move( e ), false );
     document.addEventListener( "touchmove", e => this.move( e ), false );

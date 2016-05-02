@@ -134,7 +134,7 @@ class GameScreen extends Container {
     }
 
     // Clickin' and touchin'
-    if ( mouse.left ) {
+    if ( mouse.left || mouse.right ) {
 
       // Get current click position
       const x = ( mouse.x - camera.pos.x ) / camera.scale.x;
@@ -202,49 +202,53 @@ class GameScreen extends Container {
 
       }
 
-
-      // TODO: Move drag direction detection to mouse controls
-      const samples = this.mouse_past.slice( -4 ).reverse();
       let dir = this.lastDir ||  Dirs.indexToDir( this.rot );
-      let dx = 0;
-      let dy = 0;
+      
+      if ( mouse.left ) {
 
-      if ( samples.length ) {
+        // TODO: Move drag direction detection to mouse controls
+        const samples = this.mouse_past.slice( -4 ).reverse();
+        let dx = 0;
+        let dy = 0;
 
-        const maybeDir = samples.reduce( ( acc, el ) => {
+        if ( samples.length ) {
 
-          acc.dx += acc.sx - el[ 0 ];
-          acc.dy += acc.sy - el[ 1 ];
+          const maybeDir = samples.reduce( ( acc, el ) => {
 
-          return acc;
+            acc.dx += acc.sx - el[ 0 ];
+            acc.dy += acc.sy - el[ 1 ];
 
-        }, { sx: mouse.x, sy: mouse.y, dx: 0, dy: 0 });
+            return acc;
 
-        dx = maybeDir.dx / samples.length;
-        dy = maybeDir.dy / samples.length;
-        const adx = Math.abs( dx );
-        const ady = Math.abs( dy );
+          }, { sx: mouse.x, sy: mouse.y, dx: 0, dy: 0 });
 
-        if ( adx > 1 || ady > 1 ) {
+          dx = maybeDir.dx / samples.length;
+          dy = maybeDir.dy / samples.length;
+          const adx = Math.abs( dx );
+          const ady = Math.abs( dy );
 
-          if ( adx > ady ) {
+          if ( adx > 1 || ady > 1 ) {
 
-            dir = dx > 0 ? Dirs.RIGHT : Dirs.LEFT;
+            if ( adx > ady ) {
+
+              dir = dx > 0 ? Dirs.RIGHT : Dirs.LEFT;
+
+            }
+            else {
+
+              dir = dy > 0 ? Dirs.DOWN : Dirs.UP;
+
+            }
+
+            this.lastDir = dir;
 
           }
-          else {
-
-            dir = dy > 0 ? Dirs.DOWN : Dirs.UP;
-
-          }
-
-          this.lastDir = dir;
 
         }
 
-      }
+        this.mouse_past.push( [ mouse.x, mouse.y ] );
 
-      this.mouse_past.push( [ mouse.x, mouse.y ] );
+      }
 
       if ( this.doMove ) {
 
@@ -255,9 +259,10 @@ class GameScreen extends Container {
       }
       else {
 
+
         earth.setTile(
           {
-            type: env.tiles[ Object.keys( env.tiles )[ this.tile ] ].type,
+            type: mouse.left ? env.tiles[ Object.keys( env.tiles )[ this.tile ] ].type : "Blank",
             dir
           },
           { x, y });
