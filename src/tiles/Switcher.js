@@ -122,63 +122,6 @@ class Switcher extends Tile {
     }
     }
 
-    /*const xo = speed * dt * Dirs.dtHoriz( dir );
-    const yo = speed * dt * Dirs.dtVert( dir );
-
-    // Logical position
-    const rxo = this.item_x += xo;
-    const ryo = this.item_y += yo;
-
-    // Did move off tile?
-    const wantsToMoveToNextTile = dir === Dirs.UP && ryo < 0 ||
-      dir === Dirs.DOWN && ryo > tileH ||
-      dir === Dirs.LEFT && rxo < 0 ||
-      dir === Dirs.RIGHT && rxo > tileW;
-
-    if ( wantsToMoveToNextTile ) {
-
-      const { x, y } = map.worldToTilePosition( pos );
-      const n = map.get4Neigbours( x, y );
-      const op = Dirs.opposite( dir );
-      n[ Dirs.toIndex( op ) - 1 ] = null; // remove opposite
-      const lastIdx = Dirs.toIndex( this.lastDir );
-      const nextIdx = ( lastIdx + 1 ) % 5;
-      const fromTile = this.fromTile;
-
-      const chooseOne = n.filter( n => {
-
-        return n && n.type !== "Blank" && n !== fromTile;
-
-      } );
-
-      const next = !chooseOne.length ?
-        fromTile  :
-        chooseOne[ Math.random() * chooseOne.length | 0 ];
-      //const next = map.getTileInDir( x, y, dir );
-
-
-      let dirsToCheck = Dirs.notDir( Dirs.opposite( dir ) );
-      if ( dirsToCheck.length > 1 ) {
-
-        dirsToCheck = dirsToCheck.filter( d => d !== this.lastDir );
-
-      }
-
-      if ( next && next.acceptItem( item, this ) ) {
-
-        this.item = null;
-
-      }
-
-      return;
-
-    }
-
-    // Screen position
-    item.pos.x += xo;
-    item.pos.y += yo;
-    */
-
   }
 
   updateAnimFrame ( dt, t ) {

@@ -123,7 +123,18 @@ class MachineChunk extends TileMap {
     const oldTileDeets = this.map.tiles[ offset ];
     const oldTile = this.children[ offset ];
 
-    if ( oldTileDeets.type === type && oldTileDeets.dir === dir ) {
+    const groundIsBlank = oldTileDeets.type !== "Blank";
+    const erasing = type === "Blank" && groundIsBlank;
+    const exactSame = oldTileDeets.type === type && oldTileDeets.dir === dir;
+    const rotating = oldTileDeets.type === type && oldTileDeets.dir !== dir;
+
+    if ( exactSame ) {
+
+      return;
+
+    }
+
+    if ( ! ( rotating || erasing ) && groundIsBlank ) {
 
       return;
 
