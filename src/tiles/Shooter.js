@@ -17,7 +17,7 @@ class Shooter extends Tile {
   static icon = { x: 0, y: 8 };
 
   state = new State( "IDLE" );
-  speed = 0.09;
+  speed = 0.096;
 
   constructor ( dir ) {
 

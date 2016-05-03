@@ -1,7 +1,6 @@
 import TileMap from "../../lib/TileMap";
 import Dirs from "../Dirs";
 import env from "../env";
-import Iron from "../items/Iron";
 
 const {
   tileW,
@@ -30,13 +29,18 @@ class MachineChunk extends TileMap {
         const isLeft = xp === 4 && yp > 2 && yp < 9;
         const isRight = xp === 11 && yp > 1 && yp < 9;
 
-        const tile2 = isTop ? { type: "Passer", dir: Dirs.RIGHT } :
+        let tile = isTop ? { type: "Passer", dir: Dirs.RIGHT } :
           isBot ? { type: "Passer", dir: Dirs.LEFT } :
           isLeft ? { type: "Passer", dir: Dirs.UP } :
           isRight ? { type: "Passer", dir: Dirs.DOWN } :
           { type: "Blank" };
-        const tile = Math.random() < 0.005 ? { type: "Source" } : { type: "Blank" };
-
+        tile = { type: "Blank" };
+        //const tile = Math.random() < 0.005 ? { type: "Source" } : { type: "Blank" };
+        if ( i === 100 ) tile = { type: "Source" };
+        if ( i === 118 || i === 136 ) tile = { type: "Passer", dir: Dirs.DOWN };
+        if ( i === 154 ) tile = { type: "Shooter", dir: Dirs.LEFT };
+        if ( i === 152 ) tile = { type: "Passer", dir: Dirs.LEFT };
+        if ( i === 151 ) tile = { type: "Box" };
         return tile;
 
       }

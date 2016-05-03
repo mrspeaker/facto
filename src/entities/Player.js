@@ -21,11 +21,6 @@ function Player (controls, tryMove) {
   this.velocity = { x: 0, y: 0 };
   this.acceleration = { x: 0.1, y: 0.12};
 
-  this.sounds = {
-    swoosh: new pop.Sound("./res/sounds/swoosh.wav?a=2", {volume: 0.2, loop: true}),
-    jump: new pop.SoundPool("./res/sounds/jump.wav?a=1", 3, {volume: 0.4})
-  };
-
   this.speed = 0.1;
 }
 Player.prototype = Object.create(pop.TileSprite.prototype);

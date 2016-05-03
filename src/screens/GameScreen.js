@@ -5,7 +5,6 @@ import Player from "../entities/Player"; // probably should be in earth
 import Earth from "../Earth";
 import Camera from "../Camera"; // probably should be in earth
 
-import UITile from "../UITile";
 import HUD from "../HUD";
 
 import MouseControls from "../controls/MouseControls";
@@ -23,7 +22,7 @@ const {
 
 class GameScreen extends Container {
 
-  hudLeft = 20;
+  hudLeft = 40;
   hudBottom = 100;
 
   constructor ( canvas, worldParams, controls, gameOver ) {
@@ -68,20 +67,24 @@ class GameScreen extends Container {
     this.hud = new HUD( this.hudLeft, this.hudBottom );
     this.add( this.hud );
 
-    this.uiTile = new UITile( {x: 0, y: 0}, false );
-    this.uiTile.pos.x = 45;
-    this.uiTile.pos.y = env.h - 48;
-    this.tile = 1;
+    this.tile = 2;
     this.rot = 1;
-    this.add( this.uiTile );
-    this.setTileUI();
+    //this.uiTile = new UITile( {x: 0, y: 0}, false );
+    //this.uiTile.pos.y = env.h - this.hud.bottom + 30;
+    //this.uiTile.pos.x = 45;
+    //this.add( this.uiTile );
+
+    this.uiSelected = new Sprite( new  Texture( "./res/images/uiselected.png" ) );
+    this.uiSelected.pos.x = 32;
+    this.uiSelected.pos.y = 32;
+    this.add( this.uiSelected );
 
     this.selected = new Sprite( new Texture( "./res/images/hud_selected.png" ) );
     this.selected.pos.y = env.h - 60;
     this.selected.pos.x = 30;
     this.add( this.selected );
 
-
+    this.setTileUI();
 
     this.hover = new Sprite( new  Texture( "./res/images/hover.png" ) );
     this.hover.pos.x = 32;
@@ -92,10 +95,11 @@ class GameScreen extends Container {
 
   setTileUI () {
 
-    const clz = env.tiles[ Object.keys( env.tiles )[ this.tile ] ];
-
-    this.uiTile.frame.x = clz.rotates ? this.rot : clz.icon.x;
-    this.uiTile.frame.y = clz.icon.y;
+    //const clz = env.tiles[ Object.keys( env.tiles )[ this.tile ] ];
+    //this.uiTile.frame.x = clz.rotates ? this.rot : clz.icon.x;
+    //this.uiTile.frame.y = clz.icon.y;
+    this.uiSelected.pos.y = env.h - this.hud.bottom + 2;
+    this.uiSelected.pos.x = (this.tile + 1) * 40 + 5;
 
   }
 
