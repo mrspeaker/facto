@@ -1,71 +1,54 @@
 import pop from "pop";
 import env from "./env";
+import UITile from "./UITile";
 
 const {
   Texture,
+  Container,
   Sprite
 } = pop;
 
 const hud = new Texture("res/images/hud.png");
 
-class HUD extends Sprite {
+class HUD extends Container {
 
-  constructor () {
+  constructor ( left, bottom ) {
 
     super(hud);
+    this.left = left;
+    this.bottom = bottom;
+
+    this.pos.x = left;
+    this.pos.y = env.h - bottom;
+
+    this.add( new Sprite( hud ));
+
+    this.quiver = Object.keys( env.tiles ).map( ( tile, i ) => {
+
+      const clz = env.tiles[ tile ];
+      const t = new UITile( clz.icon, clz.rotates );
+      this.add( t );
+      t.pos.x = i * 40 + 10;
+      t.pos.y = 5;
+
+    });
 
   }
 
   checkButtons ( x, y ) {
 
-    const h = 100;
-    const yo = h - (env.h - y);
+    const yo = this.bottom - (env.h - y);
 
     // UI buttons
-    if ( yo < 0 ) {
+    if ( yo < 0 || yo > 40 ) {
 
       return "";
 
     }
 
-    // Bottom row of hud
-    if ( yo > 40 ) {
-
-      if ( x < 117 ) {
-
-        return "SWITCH";
-
-      }
-
-      // Left side (rotate)
-      if ( x < 215 ) {
-
-        return "ROTATE";
-
-      }
-
-      if ( x <= 312 ) {
-
-        return "MOVE";
-
-      }
-
-      // Right side
-      if ( x < 360 ) {
-
-        return yo >= 40 + 30 ? "DOWN" : "UP";
-
-      }
-
-    }
-
-    else {
-
-      const button = ( x - 10 ) / 40 | 0;
-      if ( button < Object.keys( env.tiles ).length ) {
-        return "BUTTON_" + button;
-      }
-
+    const button = ( x - this.left - 10 ) / 40 | 0;
+    if ( button < Object.keys( env.tiles ).length ) {
+      return "BUTTON_" + button;
     }
 
     return "";

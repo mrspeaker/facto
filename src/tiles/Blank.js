@@ -22,9 +22,6 @@ class Blank extends Tile {
     this.frame.x = 0;
     this.frame.y = 0;
 
-    this.wall = false;
-    this.items = [];
-
   }
 
 }

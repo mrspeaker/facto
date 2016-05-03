@@ -23,6 +23,9 @@ const {
 
 class GameScreen extends Container {
 
+  hudLeft = 20;
+  hudBottom = 100;
+
   constructor ( canvas, worldParams, controls, gameOver ) {
 
     super();
@@ -62,10 +65,7 @@ class GameScreen extends Container {
     this.camera = camera;
     this.player = player;
 
-    this.hud = new HUD();
-    this.hud.pos.x = 0;
-    this.hud.pos.y = env.h - 100;
-
+    this.hud = new HUD( this.hudLeft, this.hudBottom );
     this.add( this.hud );
 
     this.uiTile = new UITile( {x: 0, y: 0}, false );
@@ -81,15 +81,7 @@ class GameScreen extends Container {
     this.selected.pos.x = 30;
     this.add( this.selected );
 
-    this.quiver = Object.keys( env.tiles ).map( ( tile, i ) => {
 
-      const clz = env.tiles[ tile ];
-      const t = new UITile( clz.icon, clz.rotates );
-      this.add( t );
-      t.pos.x = i * 40 + 10;
-      t.pos.y = env.h - 95;
-
-    });
 
     this.hover = new Sprite( new  Texture( "./res/images/hover.png" ) );
     this.hover.pos.x = 32;
@@ -113,14 +105,14 @@ class GameScreen extends Container {
 
     const { earth, mouse, camera } = this;
 
-    const wheelDt = this.mouse.wheelDt;
+    /*const wheelDt = this.mouse.wheelDt;
     if ( wheelDt !== 0 ) {
 
       this.camera.scale.x += 0.1 * wheelDt;
       this.camera.scale.y += 0.1 * wheelDt;
       this.mouse.wheelDt = 0;
 
-    }
+    }*/
 
     if ( mouse.x > 0 && mouse.y < env.h - 100 ) {
 
@@ -156,54 +148,10 @@ class GameScreen extends Container {
 
         }
 
-        switch ( pressed ) {
-
-        case "ROTATE":
-          this.rot = ( this.rot % 4 ) + 1;
-          this.setTileUI();
-          mouse.left = false;
-          break;
-
-        case "SWITCH":
-          if ( this.doMove ) {
-
-            this.doMove = false;
-
-          }
-          else {
-
-            this.tile = ( this.tile + 1 ) % 4;
-            this.rot = 1;
-
-          }
-          this.selected.pos.x = 30;
-          this.setTileUI();
-          mouse.left = false;
-          break;
-
-        case "MOVE":
-          this.doMove = true;
-          this.selected.pos.x = 230;
-          return;
-
-        case "UP":
-          this.camera.scale.x += 0.01;
-          this.camera.scale.y += 0.01;
-          break;
-
-        case "DOWN":
-          this.camera.scale.x -= 0.01;
-          this.camera.scale.y -= 0.01;
-          break;
-
-        }
-
-        return;
-
       }
 
       let dir = this.lastDir ||  Dirs.indexToDir( this.rot );
-      
+
       if ( mouse.left ) {
 
         // TODO: Move drag direction detection to mouse controls

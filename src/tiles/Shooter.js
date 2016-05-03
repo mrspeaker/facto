@@ -17,7 +17,7 @@ class Shooter extends Tile {
   static icon = { x: 0, y: 8 };
 
   state = new State( "IDLE" );
-  speed = 0.3;
+  speed = 0.09;
 
   constructor ( dir ) {
 
@@ -37,11 +37,11 @@ class Shooter extends Tile {
 
   update ( dt, t, map ) {
 
-    const { item, speed, dir, pos } = this;
+    const { item, speed, dir, pos, state } = this;
 
-    this.state.tick( dt, t );
+    state.tick( dt, t );
 
-    if ( this.state.is( "IDLE" ) ) {
+    if ( state.is( "IDLE" ) ) {
 
 
       if ( ! item ) {
@@ -50,13 +50,15 @@ class Shooter extends Tile {
 
       }
       this.frame.x++;
-      this.state.to( "SHOOTING" );
+      state.to( "SHOOTING" );
 
     }
 
-    else if ( this.state.is( "SHOOTING" ) ) {
+    else if ( state.is( "SHOOTING" ) ) {
 
-      if ( this.state.time < 300 ) {
+      const shotLength = 700;
+
+      if ( state.time < shotLength ) {
 
         const xo = speed * dt * Dirs.dtHoriz( dir );
         const yo = speed * dt * Dirs.dtVert( dir );
@@ -64,13 +66,13 @@ class Shooter extends Tile {
         if ( xo !== 0 ) {
 
           item.pos.x += xo;
-          item.pos.y -= Math.cos( this.state.time / 65 ) * 5;
+          item.pos.y -= Math.sin((state.time / shotLength) * 2 * Math.PI) * 4;
 
         }
 
         else {
 
-          item.pos.x -= Math.sin( this.state.time / 60 ) * 5;
+          item.pos.x -= Math.sin((state.time / shotLength) * 2 * Math.PI) * 4;
           item.pos.y += yo;
 
         }

@@ -11,7 +11,6 @@ class Tile extends TileSprite {
   item = null;
   item_x = 0;
   item_y = 0;
-  wall = true;
 
   takeableItem = null;
 
