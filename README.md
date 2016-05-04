@@ -20,12 +20,14 @@ You need a "source", a "taker-giver" and "passers"
 * reading ground chunk from machine chunk
 * can taker-picker stuck items
 * fix out-of-bounds clicks
-* remove zooming
-* fix cursor/hover scaling
 * don't affect previous items for a few ticks (so it doens't just dump them as drawing)
 * make something playable for others
 * smarter path dragging (on corners)
 * weird tile placing position if window too small
+
+* trains
+* trees, grow things.
+* water - auto-boats
 
 ## Notes
 

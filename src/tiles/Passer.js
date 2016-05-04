@@ -50,7 +50,7 @@ class Passer extends Tile {
 
     if ( dir === Dirs.DOWN ) {
 
-      frame.x = ! item ? 2 : ( item_y / ( tileH / 4 ) | 0 );
+      frame.x = ! item ? [2, 4][(t / 300 | 0) % 2] : ( item_y / ( tileH / 4 ) | 0 );
 
     }
 
@@ -60,7 +60,7 @@ class Passer extends Tile {
 
     }
 
-    if (frame.x < 0 || frame.x > 3) {
+    if (frame.x < 0 || frame.x > 5) {
 
       // Bad frame... fix this .. item rel position is still moving even when stuck!
       frame.y = 0;

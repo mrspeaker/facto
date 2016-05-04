@@ -63,16 +63,18 @@ class Shooter extends Tile {
         const xo = speed * dt * Dirs.dtHoriz( dir );
         const yo = speed * dt * Dirs.dtVert( dir );
 
+        const perc = (shotLength / 2 - state.time) / shotLength;
+
         if ( xo !== 0 ) {
 
           item.pos.x += xo;
-          item.pos.y -= Math.sin((state.time / shotLength) * 2 * Math.PI) * 4;
+          item.pos.y -= perc * 8;
 
         }
 
         else {
 
-          item.pos.x -= Math.sin((state.time / shotLength) * 2 * Math.PI) * 4;
+          item.pos.x -= perc * 8;
           item.pos.y += yo;
 
         }
