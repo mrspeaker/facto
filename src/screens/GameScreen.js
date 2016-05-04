@@ -91,6 +91,12 @@ class GameScreen extends Container {
     this.hover.pos.y = 32;
     this.add( this.hover );
 
+    this.cursor = new Sprite( new  Texture( "./res/images/cursor2.png" ) );
+    this.cursor.pos.x = 32;
+    this.cursor.pos.y = 32;
+    this.add( this.cursor );
+
+
   }
 
   setTileUI () {
@@ -117,6 +123,9 @@ class GameScreen extends Container {
       this.mouse.wheelDt = 0;
 
     }*/
+
+    this.cursor.pos.x = mouse.x - 16;
+    this.cursor.pos.y = mouse.y - 16;
 
     if ( mouse.x > 0 && mouse.y < env.h - 100 ) {
 

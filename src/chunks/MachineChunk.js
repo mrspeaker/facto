@@ -36,11 +36,13 @@ class MachineChunk extends TileMap {
           { type: "Blank" };
         tile = { type: "Blank" };
         //const tile = Math.random() < 0.005 ? { type: "Source" } : { type: "Blank" };
-        if ( i === 100 ) tile = { type: "Source" };
-        if ( i === 118 || i === 136 ) tile = { type: "Passer", dir: Dirs.DOWN };
-        if ( i === 154 ) tile = { type: "Shooter", dir: Dirs.LEFT };
-        if ( i === 152 ) tile = { type: "Passer", dir: Dirs.LEFT };
-        if ( i === 151 ) tile = { type: "Box" };
+        const w = env.chunkW;
+        const first = w * 5 + 10;
+        if ( i === first ) tile = { type: "Source" };
+        if ( i === first + w || i === first + w + w ) tile = { type: "Passer", dir: Dirs.DOWN };
+        if ( i === first + w + w + w ) tile = { type: "Shooter", dir: Dirs.LEFT };
+        if ( i === first + w + w + w - 2 ) tile = { type: "Passer", dir: Dirs.LEFT };
+        if ( i === first + w + w + w - 3 ) tile = { type: "Box" };
         return tile;
 
       }
