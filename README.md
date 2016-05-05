@@ -17,6 +17,7 @@ You need a "source", a "taker-giver" and "passers"
 
 ## Next todos:
 
+* scroll at edges of window
 * reading ground chunk from machine chunk
 * can taker-picker stuck items
 * fix out-of-bounds clicks
@@ -30,9 +31,6 @@ You need a "source", a "taker-giver" and "passers"
 * water - auto-boats
 
 ## Notes
-
-* passers should be takers too - easier. No "belt" concept so inserters are overkill
-> tiles should be *takers*, *pasers*, or *both*.
 
 Make it more "rube goldberg-y" - things flying through the air and caught etc.
 
