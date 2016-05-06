@@ -96,9 +96,11 @@ class TakerGiver extends Tile {
 
       else {
 
-        const nextItem = next.reliquishItem( map );
-        if ( nextItem ) {
+        let nextItem = next.reliquishItem( map, true );
 
+        if ( nextItem && nextItem.type !== "Iron" ) {
+
+          nextItem = next.reliquishItem( map );
           this.acceptItem( nextItem, next );
           this.state.to( "TAKING" );
 

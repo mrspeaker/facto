@@ -6,7 +6,6 @@
 * right-click removes
 * wsad (or arrows): pans
 * 1 - 10: selects a tile (or click on tile in HUD)
-* mouse up/down: zoom (change this!)
 
 You need a "source", a "taker-giver" and "passers"
 
@@ -17,6 +16,7 @@ You need a "source", a "taker-giver" and "passers"
 
 ## Next todos:
 
+* better handshake when taking/accepting/reliquishing
 * scroll at edges of window
 * reading ground chunk from machine chunk
 * can taker-picker stuck items
@@ -27,7 +27,6 @@ You need a "source", a "taker-giver" and "passers"
 * weird tile placing position if window too small
 
 * trains
-* trees, grow things.
 * water - auto-boats
 
 ## Notes

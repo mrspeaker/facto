@@ -163,7 +163,7 @@ class Passer extends Tile {
 
   }
 
-  reliquishItem () {
+  reliquishItem ( map, tentative ) {
 
     const { item, item_x, item_y } = this;
 
@@ -176,7 +176,11 @@ class Passer extends Tile {
     if ( item_x <= 15 || item_x >= 17 ) return null;
     if ( item_y <= 15 || item_y >= 17 ) return null;
 
-    this.item = null;
+    if (!tentative) {
+
+      this.item = null;
+
+    }
     return item;
 
   }
