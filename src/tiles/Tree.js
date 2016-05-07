@@ -39,13 +39,16 @@ class Tree extends Tile {
 
     const { pos } = this;
 
+    const growTime = 12000;
+    const growFrames = 6 - 1;
+
     if ( this.state === "IDLE" ) {
 
       this.stateTime += dt;
-      if ( this.stateTime < 10000 ) {
+      if ( this.stateTime < growTime ) {
 
         this.frame.y = 0;
-        this.frame.x = this.stateTime / 2000 % 5 | 0;
+        this.frame.x = this.stateTime / (growTime / growFrames) | 0;
 
         return;
 
@@ -61,8 +64,8 @@ class Tree extends Tile {
       this.stateTime += dt;
 
       this.frame.y = 0;
-      this.frame.x = 4;//this.stateTime / 1000 % 4 | 0;
-      if ( this.stateTime < 1000 ) {
+      this.frame.x = growFrames; //this.stateTime / 1000 % 4 | 0;
+      if ( this.stateTime < 4000 ) {
 
         return;
 
@@ -96,7 +99,7 @@ class Tree extends Tile {
     else if ( this.state === "LOADED" ) {
 
       this.stateTime += dt;
-      this.frame.x = 4; //( this.stateTime / 300 % 2 | 0) + 3;
+      this.frame.x = growFrames; //( this.stateTime / 300 % 2 | 0) + 3;
 
 
     }
@@ -113,7 +116,7 @@ class Tree extends Tile {
 
     }
 
-    this.state = "IDLE";
+    this.state = "BIRTHING";
     this.stateTime = 0;
     this.item = null;
 

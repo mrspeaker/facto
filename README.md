@@ -34,3 +34,5 @@ You need a "source", a "taker-giver" and "passers"
 Make it more "rube goldberg-y" - things flying through the air and caught etc.
 
 The factory part is weird alien icky... but it produces happy lovely products for the people. They don't konw what lurks inside.
+
+-- items represent 1s and 0s: items become data.
