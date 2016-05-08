@@ -4,6 +4,7 @@ import Dirs from "../Dirs";
 import Player from "../entities/Player"; // probably should be in earth
 import Earth from "../Earth";
 import Camera from "../Camera"; // probably should be in earth
+import State from "../State";
 
 import HUD from "../HUD";
 
@@ -34,6 +35,7 @@ class GameScreen extends Container {
 
     this.mouse = new MouseControls( canvas );
     this.mouse_past = [];
+    this.mouseState = new State("IDLE");
 
     var player = new Player( controls, function ( pos, delta ) {
       return {
@@ -156,7 +158,6 @@ class GameScreen extends Container {
           this.selected.pos.x = 30;
           this.setTileUI();
           mouse.left = false;
-          this.doMove = false;
           return;
 
         }
@@ -167,7 +168,7 @@ class GameScreen extends Container {
 
       if ( mouse.left ) {
 
-        // TODO: Move drag direction detection to mouse controls
+        // TODO: Move drag direction detection to MouseControls
         const samples = this.mouse_past.slice( -4 ).reverse();
         let dx = 0;
         let dy = 0;
@@ -211,24 +212,14 @@ class GameScreen extends Container {
 
       }
 
-      if ( this.doMove ) {
+      // TODO: lock drag to dir
+      console.log(dir, y / 32 | 0);
 
-        // Pan.
-        this.player.velocity.x += 0.03 * Dirs.dtHoriz( dir );
-        this.player.velocity.y += 0.03 * Dirs.dtVert( dir );
-
-      }
-      else {
-
-
-        earth.setTile(
-          {
-            type: mouse.left ? env.tiles[ Object.keys( env.tiles )[ this.tile ] ].type : "Blank",
-            dir
-          },
-          { x, y });
-
-      }
+      earth.setTile({
+        type: mouse.left ? env.tiles[ Object.keys( env.tiles )[ this.tile ] ].type : "Blank",
+        dir},
+        { x, y }
+      );
 
     } else {
 
@@ -250,7 +241,6 @@ class GameScreen extends Container {
         this.tile = i;
         this.setTileUI();
         this.selected.pos.x = 30;
-        this.doMove = false;
 
       }
 

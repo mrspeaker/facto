@@ -7,7 +7,7 @@
 * wsad (or arrows): pans
 * 1 - 10: selects a tile (or click on tile in HUD)
 
-You need a "source", a "taker-giver" and "passers"
+You need a "source", and "passers"
 
 ## Next types:
 
@@ -17,6 +17,7 @@ You need a "source", a "taker-giver" and "passers"
 ## Next todos:
 
 * better handshake when taking/accepting/reliquishing
+* lock mouse when dragging.
 * scroll at edges of window
 * reading ground chunk from machine chunk
 * can taker-picker stuck items
