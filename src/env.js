@@ -8,7 +8,7 @@ const env = {
   chunkW: 24,
   chunkH: 24,
 
-  chunksX: 2,
+  chunksX: 1,
   chunksY: 1,
   tileW: 32,
   tileH: 32,

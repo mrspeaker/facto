@@ -102,7 +102,7 @@ class Passer extends Tile {
           const nextItem = next.reliquishItem( map );
           if ( nextItem ) {
 
-            this.acceptItem( nextItem, next );
+            this.acceptItem( nextItem, next, map );
             this.state.to( "PASSING" );
 
           }
@@ -139,7 +139,7 @@ class Passer extends Tile {
         const { x, y, } = map.worldToTilePosition( pos );
         const next = map.getTileInDir( x, y, dir );
 
-        if ( next && next.acceptItem( item, this ) ) {
+        if ( next && next.acceptItem( item, this, map ) ) {
 
           this.item = null;
           this.state.to( "IDLE" );

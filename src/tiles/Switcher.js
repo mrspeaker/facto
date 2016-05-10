@@ -105,7 +105,7 @@ class Switcher extends Tile {
 
         const { x, y, } = map.worldToTilePosition( pos );
         const next = map.getTileInDir( x, y, dir );
-        if ( next.acceptItem( item, this ) ) {
+        if ( next.acceptItem( item, this, map ) ) {
 
           this.item = null;
           this.state.to( "IDLE" );

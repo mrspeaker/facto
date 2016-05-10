@@ -12,11 +12,15 @@ You need a "source", and "passers"
 ## Next types:
 
 * multitransfor: a + b -> c
+* item lands on ground, is a seed, becomes a tile...
 * source: extracts from groundchunk
+* trains?
+* water - auto-boats?
+* items-to-data converter -> b,b,b,o,b,b,o === command?
 
 ## Next todos:
 
-* better handshake when taking/accepting/reliquishing
+* better handshake when taking/accepting/reliquishing -> figure out interface.
 * lock mouse when dragging.
 * scroll at edges of window
 * reading ground chunk from machine chunk
@@ -26,9 +30,6 @@ You need a "source", and "passers"
 * make something playable for others
 * smarter path dragging (on corners)
 * weird tile placing position if window too small
-
-* trains
-* water - auto-boats
 
 ## Notes
 

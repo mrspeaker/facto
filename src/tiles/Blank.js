@@ -1,5 +1,6 @@
 import pop from "pop";
 import Tile from "./Tile";
+import Dirs from "../Dirs";
 
 const {
   Texture
@@ -21,6 +22,26 @@ class Blank extends Tile {
 
     this.frame.x = 0;
     this.frame.y = 0;
+    this.stateTime = 0;
+
+  }
+
+  update ( dt, t, map ) {
+
+    if (! this.item ) return;
+
+    if ( ( this.stateTime += dt ) < 3000 ) {
+
+      return;
+
+    }
+    this.stateTime = 0;
+
+    map.setTile({
+      type: "Passer",
+      dir: this.fromTile ? this.fromTile.dir : Dirs.RIGHT
+    },
+    { x:this.x * this.tileW, y:this.y * this.tileW});
 
   }
 

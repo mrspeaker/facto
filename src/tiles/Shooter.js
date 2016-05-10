@@ -100,7 +100,7 @@ class Shooter extends Tile {
       let nextTile = map.worldToTilePosition( next.pos );
       next = map.getTileInDir( nextTile.x, nextTile.y, dir );
 
-      if ( next.acceptItem( item, this ) ) {
+      if ( next.acceptItem( item, this, map ) ) {
 
         this.item = null;
         next.itemToCentre();

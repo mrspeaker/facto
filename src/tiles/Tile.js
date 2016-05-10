@@ -26,11 +26,12 @@ class Tile extends TileSprite {
 
   }
 
-  acceptItem ( item, fromTile ) {
+  acceptItem ( item, fromTile, map ) {
 
     const { x, y, pos } = this;
     const { tileW, tileH } = env;
-    const accepts = this.accepts( item );
+
+    const accepts = this.accepts( item, map );
 
     if ( accepts ) {
 
@@ -44,7 +45,6 @@ class Tile extends TileSprite {
         const xx = pos.x - fromTile.pos.x;
         const yy = pos.y - fromTile.pos.y;
 
-        // const dir = Dirs.opposite( fromTile.dir );
         const dir = Dirs.opposite(
           xx < 0 ? Dirs.LEFT : xx > 0 ? Dirs.RIGHT : yy < 0 ? Dirs.UP : Dirs.DOWN
         );
